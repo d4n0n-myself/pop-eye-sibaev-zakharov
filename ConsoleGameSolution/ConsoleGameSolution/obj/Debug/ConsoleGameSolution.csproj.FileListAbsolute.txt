@@ -1,0 +1,6 @@
+/Users/d4n0n_myself/pop-eye-sibaev-zakharov/ConsoleGameSolution/ConsoleGameSolution/bin/Debug/ConsoleGameSolution.exe
+/Users/d4n0n_myself/pop-eye-sibaev-zakharov/ConsoleGameSolution/ConsoleGameSolution/bin/Debug/ConsoleGameSolution.pdb
+/Users/d4n0n_myself/pop-eye-sibaev-zakharov/ConsoleGameSolution/ConsoleGameSolution/obj/Debug/ConsoleGameSolution.csprojResolveAssemblyReference.cache
+/Users/d4n0n_myself/pop-eye-sibaev-zakharov/ConsoleGameSolution/ConsoleGameSolution/obj/Debug/ConsoleGameSolution.csproj.CoreCompileInputs.cache
+/Users/d4n0n_myself/pop-eye-sibaev-zakharov/ConsoleGameSolution/ConsoleGameSolution/obj/Debug/ConsoleGameSolution.exe
+/Users/d4n0n_myself/pop-eye-sibaev-zakharov/ConsoleGameSolution/ConsoleGameSolution/obj/Debug/ConsoleGameSolution.pdb

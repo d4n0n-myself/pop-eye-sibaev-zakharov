@@ -23,6 +23,30 @@ namespace ConsoleGameSolution
             
             while (!gameOver)
             {
+                // d4n0n : 
+                // прописать прорисовку стен (рандомную)
+                // через массивы?
+                // будет необходимо условие чтобы 1 строка была со стенами, а другая нет (поочередно)
+                // идея : заполнение поочередно полных строк стен, затем вырезать проходы
+                /*
+                пример - 
+                
+               __________________
+               |§              #|
+               |++  ++++++++++++|                
+               |               §|
+               |+++++++++++  +++|
+               |@               |
+               ------------------                 
+               
+               @ - собачка, герой, мы им управляем
+               § - ghost ( может быть другой символ)
+               # - место, куда надо прийти
+               
+               lvl должен быть больше (около трех дырок в стене)
+                 */
+                
+                
                 var stopwatch = new Stopwatch();
                 if (Console.KeyAvailable)
                 {
@@ -40,6 +64,8 @@ namespace ConsoleGameSolution
                     // Задержка
                     Thread.Sleep(sleepTime);
                 }
+                
+                //описать проверки на врезание в стены или в госта
 
             }
             Console.Clear();
@@ -48,7 +74,8 @@ namespace ConsoleGameSolution
 
     public class Ghost
     {
-        
+        public static int X { get; private set; }
+        public static int Y { get; private set; }
     }
 
     public class ConsoleGame
