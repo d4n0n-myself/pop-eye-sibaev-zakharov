@@ -1,36 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace ConsoleGame
+namespace ConsoleGameSolution
 {
     /// <summary>
     /// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707
     /// </summary>
+    
+    
     class Program
     {
         public class At
         {
-            private readonly int _xLimit;
-            private readonly int _yLimit;
+            public static int XLimit;
+            public static int YLimit;
+            
             public At()
-                : this(Console.WindowWidth / 2, 0, Console.WindowWidth - 1, Console.WindowHeight - 2)
+                : this(Console.WindowWidth - 1, Console.WindowHeight - 2)
             { }
 
-            public At(int x, int y, int xLimit, int yLimit)
+            public At(int xLimit, int yLimit)
             {
-                X = 1;
-                Y = 1;
-                _xLimit = xLimit;
-                _yLimit = yLimit;
-                // Производим первичную отрисовку
+                XLimit = xLimit;
+                YLimit = yLimit;
+            }
+        }
+
+        public class Entity
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
+        }
+        
+        public class Player : Entity
+        {
+            public void Create()
+            {
                 Console.SetCursorPosition(X, Y);
                 Console.Write('@');
             }
-            public int X { get; private set; }
-            public int Y { get; private set; }
-
+            
             public void Move(ConsoleKey direction)
             {
                 // Стираем следы (все пиксели игрового объекта на поле)
@@ -38,18 +52,33 @@ namespace ConsoleGame
                 Console.Write(' ');
                 switch (direction)
                 {
+                    //для первого игрока
                     case ConsoleKey.A:
                         if (X > 1) X--;
                         break;
                     case ConsoleKey.D:
-                        if (X < _xLimit - 2) X++;
+                        if (X < At.XLimit - 2) X++;
                         break;
                     case ConsoleKey.W:
                         if (Y > 1) Y--;
                         break;
                     case ConsoleKey.S:
-                        if (Y < _yLimit - 1)
+                        if (Y < At.YLimit - 1)
                             Y++;
+                        break;
+                        
+                    //для второго игрока
+                    case ConsoleKey.UpArrow:
+                        if (Y > 1) Y--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (Y < At.YLimit - 1) Y++;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (X > 1) X--;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (X < At.XLimit - 2) X++;
                         break;
                 }
                 // Отрисовываем объект в новой позиции
@@ -58,10 +87,12 @@ namespace ConsoleGame
             }
         }
 
-        public class Ghost
+        public class Ghost : Entity
         {
-            public int X { get; set; }
-            public int Y { get; set; }
+        }
+
+        public class DestinationPoint : Entity
+        {
         }
 
         public static List<Ghost> CreateGhosts()
@@ -97,7 +128,7 @@ namespace ConsoleGame
                     if (i == 0 || j == 0 || i == 29 || j == 89)
                     {
                         Console.SetCursorPosition(j, i);
-                        Console.Write('+');
+                        Console.Write('#');
                     }
 
             //d4n0n - создать ghost'ов
@@ -106,6 +137,20 @@ namespace ConsoleGame
             // Создаём игровые объекты
             var at = new At();
 
+            
+            //d4n0n - создание player ов
+            Player[] players = new Player[2];
+            for (int i = 0; i < 2; i++)
+                players[i].Create();
+            
+            //d4n0n - создание destination point
+            DestinationPoint point = new DestinationPoint();
+            var random = new Random();
+            point.X = random.Next(At.XLimit) + 1;
+            point.Y = At.YLimit;
+            
+            //d4n0n - подойдет ли вообще реализация двух игроков?
+            
             bool gameOver = false;
             //Игровой цикл
             while (!gameOver)
@@ -118,18 +163,22 @@ namespace ConsoleGame
                 // Обработка нажатий клавиатуры
                 if (Console.KeyAvailable)
                 {
-                    var keyPressed = Console.ReadKey(true).Key;
-                    while (Console.KeyAvailable)
-                        Console.ReadKey(true);
-                    if (keyPressed == ConsoleKey.Escape) break;
+                    for (int i = 0; i < 2; i++)
+                    {
+                        var keyPressed = Console.ReadKey(true).Key;
+                        while (Console.KeyAvailable)
+                            Console.ReadKey(true);
+                        if (keyPressed == ConsoleKey.Escape) break;
 
-                    // Перемещение объектов по нажатию кнопок
-                    at.Move(keyPressed);
+                        // Перемещение объектов по нажатию кнопок
+                        players[i].Move(keyPressed);
+                    }
                 }
 
                 for (int i = 0; i < ghosts.Count; i++)
-                    if (at.X == ghosts[i].X && at.Y == ghosts[i].Y)
-                        gameOver = true;
+                    for (int j=0; i < 2; i++)
+                        if (players[j].X == ghosts[i].X && players[j].Y == ghosts[i].Y)
+                            gameOver = true;
 
                 //НУЖНО РЕАЛИЗОВАТЬ ДВИЖЕНИЕ ГОСТОВ
 

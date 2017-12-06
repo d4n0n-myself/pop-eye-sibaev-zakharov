@@ -9,29 +9,36 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Program.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="44" column="15" lean-forward="true" selection-start-line="44" selection-start-column="15" selection-end-line="44" selection-end-column="15" />
+            <state relative-caret-position="192">
+              <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
               <folding>
-                <marker date="1512129456871" expanded="false" signature="6:135" ph="..." />
-                <marker date="1512129456871" expanded="true" signature="166:3833" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="173:268" ph="/// Made by Danel Sibaev 11-706 and Kirill Zakharov 11-707 ... " />
-                <marker date="1512129456871" expanded="true" signature="295:2614" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="348:2608" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="711:2569" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="742:1036" ph="/* d4n0n : ... */" />
-                <marker date="1512129456871" expanded="true" signature="1053:1633" ph="/* пример - ... */" />
-                <marker date="1512129456871" expanded="true" signature="1758:2470" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="2638:2750" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="2780:3831" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="3013:3091" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="3148:3824" ph="{...}" />
-                <marker date="1512129456871" expanded="true" signature="3260:3738" ph="{...}" />
+                <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+                <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+                <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+                <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+                <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -55,7 +62,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -77,16 +84,13 @@
       <pane id="Scratches" />
       <pane id="SolutionExplorer">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ConsoleGameSolution (1 project)" />
-              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="ConsoleGameSolution (1 project)" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+          </expand>
+          <select />
         </subPane>
         <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
@@ -95,7 +99,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="true" />
+    <property name="settings.editor.selected.configurable" value="RiderNuGetOptionsPageId" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -110,6 +114,27 @@
     </option>
   </component>
   <component name="RunManager" selected=".NET Project.Default">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/ConsoleGameSolution/bin/Debug/ConsoleGameSolution.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <envs />
+      <option name="USE_MONO" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/ConsoleGameSolution/ConsoleGameSolution.csproj" />
+      <option name="PROJECT_OUTPUT_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="Console" />
+      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.5" />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
     <configuration default="true" type="DotNetProject" factoryName=".NET Project">
       <option name="PROJECT_PATH" value="" />
       <option name="PROJECT_KIND" value="None" />
@@ -141,15 +166,6 @@
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run" />
       <scripts />
@@ -170,21 +186,6 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <configuration default="false" name="Default" type="DotNetProject" factoryName=".NET Project">
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/ConsoleGameSolution/ConsoleGameSolution.csproj" />
-      <option name="PROJECT_KIND" value="Console" />
-      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.5" />
-      <option name="EXE_PATH" value="$PROJECT_DIR$/ConsoleGameSolution/bin/Debug/ConsoleGameSolution.exe" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="USE_MONO" value="0" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <envs />
-      <method />
-    </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -198,11 +199,17 @@
       <updated>1512120379851</updated>
       <workItem from="1512120381328" duration="2233000" />
       <workItem from="1512128560811" duration="896000" />
+      <workItem from="1512381435174" duration="707000" />
+      <workItem from="1512383137571" duration="881000" />
+      <workItem from="1512386586940" duration="3122000" />
+      <workItem from="1512395754014" duration="128000" />
+      <workItem from="1512410581511" duration="288000" />
+      <workItem from="1512554972344" duration="79000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3129000" />
+    <option name="totallyTimeSpent" value="8334000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -219,14 +226,13 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -236,12 +242,13 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="processedProjectFiles" value="true" />
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -253,46 +260,248 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="2145">
+          <caret line="149" column="32" lean-forward="false" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
           <folding>
-            <marker date="1512129456871" expanded="false" signature="6:135" ph="..." />
-            <marker date="1512129456871" expanded="true" signature="166:3833" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="173:268" ph="/// Made by Danel Sibaev 11-706 and Kirill Zakharov 11-707 ... " />
-            <marker date="1512129456871" expanded="true" signature="295:2614" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="348:2608" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="711:2569" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="742:1036" ph="/* d4n0n : ... */" />
-            <marker date="1512129456871" expanded="true" signature="1053:1633" ph="/* пример - ... */" />
-            <marker date="1512129456871" expanded="true" signature="1758:2470" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="2638:2750" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="2780:3831" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="3013:3091" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="3148:3824" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="3260:3738" ph="{...}" />
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="44" column="15" lean-forward="true" selection-start-line="44" selection-start-column="15" selection-end-line="44" selection-end-column="15" />
+        <state relative-caret-position="2145">
+          <caret line="149" column="32" lean-forward="false" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
           <folding>
-            <marker date="1512129456871" expanded="false" signature="6:135" ph="..." />
-            <marker date="1512129456871" expanded="true" signature="166:3833" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="173:268" ph="/// Made by Danel Sibaev 11-706 and Kirill Zakharov 11-707 ... " />
-            <marker date="1512129456871" expanded="true" signature="295:2614" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="348:2608" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="711:2569" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="742:1036" ph="/* d4n0n : ... */" />
-            <marker date="1512129456871" expanded="true" signature="1053:1633" ph="/* пример - ... */" />
-            <marker date="1512129456871" expanded="true" signature="1758:2470" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="2638:2750" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="2780:3831" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="3013:3091" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="3148:3824" ph="{...}" />
-            <marker date="1512129456871" expanded="true" signature="3260:3738" ph="{...}" />
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1725">
+          <caret line="118" column="15" lean-forward="false" selection-start-line="118" selection-start-column="15" selection-end-line="118" selection-end-column="15" />
+          <folding>
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConsoleGameSolution/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+          <folding>
+            <marker date="1512555020441" expanded="false" signature="6:196" ph="..." />
+            <marker date="1512555020441" expanded="true" signature="227:6303" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="234:329" ph="/// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707 ... " />
+            <marker date="1512555020441" expanded="true" signature="357:6301" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="387:751" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="584:600" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="647:741" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="780:878" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="924:2644" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="967:1080" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1144:2634" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="1350:2480" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2681:2701" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2749:2769" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="2819:3268" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3007:3230" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3296:6295" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="3884:4029" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4800:6177" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="4866:5069" ph="/* В нём нужно выполнять действия по нажатию кнопок ... */" />
+            <marker date="1512555020441" expanded="true" signature="5111:5599" ph="{...}" />
+            <marker date="1512555020441" expanded="true" signature="5177:5581" ph="{...}" />
           </folding>
         </state>
       </provider>
