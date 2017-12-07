@@ -35,6 +35,12 @@ namespace ConsoleGameSolution
         {
             public int X { get; set; }
             public int Y { get; set; }
+
+            public static void WriteSymbol(int x,int y, Char symbol)
+            {
+                Console.SetCursorPosition(x,y);
+                Console.Write(symbol);
+            }
         }
 
         public class Player : Object
@@ -42,8 +48,7 @@ namespace ConsoleGameSolution
             public Player Create()
             {
                 Player player = new Player { X = 1, Y = 1 };
-                Console.SetCursorPosition(X, Y);
-                Console.Write('@');
+                WriteSymbol(X, Y, '@');
                 return player;
             }
 
@@ -51,29 +56,31 @@ namespace ConsoleGameSolution
             public void Move(ConsoleKey direction)
             {
                 // Стираем следы (все пиксели игрового объекта на поле)
-                Console.SetCursorPosition(X, Y);
-                Console.Write(' ');
+                WriteSymbol(X,Y,' ');
 
-                switch (direction)
-                {
-                    case ConsoleKey.A:
-                        if (X > 1) X--;
-                        break;
-                    case ConsoleKey.D:
-                        if (X < Field.XLimit - 2) X++;
-                        break;
-                    case ConsoleKey.W:
-                        if (Y > 0 && !Walls.walls[Y, X]) Y--;
-                        break;
-                    case ConsoleKey.S:
-                        if (Y < Field.YLimit - 3 && !Walls.walls[Y, X])
-                            Y++;
-                        break;
-                }
+                //реализовать вертикальную физику?
+                if (Walls.walls[Y + 1, X] == false && Y < Field.YLimit - 3)
+                    Y++;
+                else
+                    switch (direction)
+                    {
+                        case ConsoleKey.A:
+                            if (X > 1) X--;
+                            break;
+                        case ConsoleKey.D:
+                            if (X < Field.XLimit - 2) X++;
+                            break;
+                        case ConsoleKey.W:
+                            if (Y > 0 && !Walls.walls[Y, X]) Y--;
+                            break;
+                        case ConsoleKey.S:
+                            if (Y < Field.YLimit - 3 && !Walls.walls[Y, X])
+                                Y++;
+                            break;
+                    }
 
                 // Отрисовываем объект в новой позиции
-                Console.SetCursorPosition(X, Y);
-                Console.Write('@');
+                WriteSymbol(X,Y,'@');
             }
 
             public class Ghost : Object
@@ -101,8 +108,9 @@ namespace ConsoleGameSolution
                             }
                         
                         ghosts.Add(new Ghost {  X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
-                        Console.SetCursorPosition(ghosts[i].X, ghosts[i].Y);
-                        Console.Write('2');
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        WriteSymbol(ghosts[i].X,ghosts[i].Y,'X');
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
 
                     return ghosts;
@@ -110,29 +118,43 @@ namespace ConsoleGameSolution
 
                 public void Move()
                 {
-                    Console.SetCursorPosition(X, Y);
-                    Console.Write(' ');
+                    WriteSymbol(X,Y,' ');
 
-                    if (this.DirectedToRightSide == true && this.X < Field.XLimit - 2)
+                    if (DirectedToRightSide && X < Field.XLimit - 2)
                         X++;
-                    if (this.X == Field.XLimit - 3) DirectedToRightSide = false;
-                    if (this.DirectedToRightSide == false && this.X > 1)
+                    if (X == Field.XLimit - 3) DirectedToRightSide = false;
+                    if (DirectedToRightSide == false && X > 1)
                         X--;
-                    if (this.X == 2) DirectedToRightSide = true;
+                    if (X == 2) DirectedToRightSide = true;
 
-                    Console.SetCursorPosition(X, Y);
-                    Console.Write('2');
+                    WriteSymbol(X,Y,'X');
                 }
             }
 
             public class DestinationPoint : Object
             {
-                public bool PlayerReachedDestinationPoint = false;
+                public static DestinationPoint Create()
+                {
+                    var point = new DestinationPoint();
+                    var random = new Random();
+                    point.X = random.Next(Field.XLimit - 2) + 1;
+                    point.Y = Field.YLimit - 3;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    WriteSymbol(point.X, point.Y, '%');
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return point;
+                }
             }
 
             public class Walls
             {
                 public static Boolean[,] walls = new bool[Field.YLimit, Field.XLimit];
+
+                public bool[,] CreateWalls()
+                {
+                    // zaxaroff
+                    return new bool[,] { };
+                }
             }
 
             static void Main()
@@ -153,10 +175,7 @@ namespace ConsoleGameSolution
                 for (int i = 0; i < Field.YLimit; i++)
                     for (int j = 0; j < Field.XLimit; j++)
                         if (i == 0 || j == 0 || i % 2 == 0 || j == Field.XLimit - 1)
-                        {
-                            Console.SetCursorPosition(j, i);
-                            Console.Write('#');
-                        }
+                            Object.WriteSymbol(j, i, '#');
 
                 //d4n0n - player create
                 Player player = new Player().Create();
@@ -165,13 +184,8 @@ namespace ConsoleGameSolution
                 var ghosts = new Ghost().CreateGhosts();
                 
                 //d4n0n - создание destination point
-                DestinationPoint point = new DestinationPoint();
-                var random = new Random();
-                point.X = random.Next(Field.XLimit - 2) + 1;
-                point.Y = Field.YLimit - 3;
-                Console.SetCursorPosition(point.X, point.Y);
-                Console.Write("%");
-
+                var destinationPoint = DestinationPoint.Create();
+                
                 bool death = false;
                 bool gameOver = false;
                 //Игровой цикл
@@ -208,7 +222,7 @@ namespace ConsoleGameSolution
                             }
 
                     //d4n0n -  проверка на достижение цели
-                    if (player.X == point.X && player.Y == point.Y)
+                    if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                         gameOver = true;
 
 
