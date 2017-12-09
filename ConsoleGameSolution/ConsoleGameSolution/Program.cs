@@ -14,6 +14,8 @@ namespace ConsoleGameSolution
 
     class Program
     {
+        public static int playerScore;
+
         public class Field
         {
             public static int XLimit;
@@ -53,33 +55,33 @@ namespace ConsoleGameSolution
 
         public class Player : Object
         {
-            public void CreateCoordinatesStatistics()
+            public void CreateCoordinatesStatistics(char playerSymbol)
             {
-                Object.WriteSymbol(X, Y, '@', ConsoleColor.Yellow);
+                Object.WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
                 Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 1);
                 Console.Write(X);
                 Console.Write(' ');
                 Console.Write(Y);
             }
 
-            private int CheckPointUnderPlayer(bool[,] walls, int X, int Y)
+            private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
             {
                 if (!walls[X, Y + 1])
                 {
                     Thread.Sleep(100);
                     WriteSymbol(X, Y, ' ');
                     Y++;
-                    WriteSymbol(X, Y, '@', ConsoleColor.Magenta);
+                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Magenta);
                     Thread.Sleep(100);
                     WriteSymbol(X, Y, ' ');
                     Y++;
-                    WriteSymbol(X, Y, '@', ConsoleColor.Yellow);
+                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
                 }
 
                 return Y;
             }
 
-            public void Move(bool[,] walls, ConsoleKey direction)
+            public void Move(char playerSymbol, bool[,] walls, ConsoleKey direction)
             {
                 WriteSymbol(X, Y, ' ');
                 switch (direction)
@@ -88,16 +90,16 @@ namespace ConsoleGameSolution
                         if (X > 1 && !walls[X - 1, Y])
                         {
                             X--;
-                            WriteSymbol(X, Y, '@', ConsoleColor.Yellow);
-                            Y = CheckPointUnderPlayer(walls, X, Y);
+                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
                         }
                         break;
                     case ConsoleKey.D:
                         if (X < Field.XLimit && !walls[X + 1, Y])
                         {
                             X++;
-                            WriteSymbol(X, Y, '@', ConsoleColor.Yellow);
-                            Y = CheckPointUnderPlayer(walls, X, Y);
+                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
                         }
                         break;
                     case ConsoleKey.W:
@@ -109,8 +111,8 @@ namespace ConsoleGameSolution
                             Y++;
                         break;
                 }
-                
-                WriteSymbol(X, Y, '@', ConsoleColor.Yellow);
+
+                WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
 
                 Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 1);
                 Console.Write(X);
@@ -138,7 +140,7 @@ namespace ConsoleGameSolution
             {
                 var ghosts = new List<Ghost>();
                 var random = new Random();
-                var countOfGhosts = random.Next(3, Field.YLimit / 2 + 1);
+                var countOfGhosts = random.Next(5, Field.YLimit / 2 + 1);
 
                 for (int i = 0; i < countOfGhosts; i++)
                 {
@@ -172,18 +174,8 @@ namespace ConsoleGameSolution
             }
         }
 
-        public static void Main()
+        public static bool[,] DrawWalls()
         {
-            Console.BufferWidth = Console.WindowWidth = 60;
-            Console.BufferHeight = Console.WindowHeight = 20;
-            Console.CursorVisible = false;
-            const int frameDelay = 100;
-            var stopwatch = new Stopwatch();
-
-            // Создаём игровые объекты
-            var field = new Field();
-
-            ////d4n0n - Создать стены(пример обводки)
             bool[,] gameWalls = new bool[Field.XLimit + 2, Field.YLimit + 2];
 
             for (int i = 0; i < Field.XLimit + 2; i++)
@@ -207,9 +199,25 @@ namespace ConsoleGameSolution
                     if (gameWalls[i, j])
                         Object.WriteSymbol(i, j, '#', ConsoleColor.Gray);
 
+            return gameWalls;
+        }
+
+        public static int Level1(char playerSymbol) 
+        {
+            int score = 0;
+            PrepareConsole();
+            const int frameDelay = 100;
+            var stopwatch = new Stopwatch();
+
+            // Создаём игровые объекты
+            var field = new Field();
+
+            ////d4n0n - Создать стены(пример обводки)
+            var gameWalls = DrawWalls();
+
             //d4n0n - player create
             Player player = new Player { X = 1, Y = Field.YLimit };
-            player.CreateCoordinatesStatistics();
+            player.CreateCoordinatesStatistics(playerSymbol);
 
             //d4n0n - создать ghost'ов
             var ghosts = new Ghost().CreateGhosts();
@@ -225,7 +233,7 @@ namespace ConsoleGameSolution
             while (!gameOver)
             {
                 stopwatch.Start();
-                
+
                 // Обработка нажатий клавиатуры
                 if (Console.KeyAvailable)
                 {
@@ -235,7 +243,7 @@ namespace ConsoleGameSolution
                     if (keyPressed == ConsoleKey.Escape) break;
 
                     // Перемещение объектов по нажатию кнопок
-                    player.Move(gameWalls, keyPressed);
+                    player.Move(playerSymbol, gameWalls, keyPressed);
                 }
 
                 // d4n0n - ДВИЖЕНИЕ ghosts
@@ -255,7 +263,7 @@ namespace ConsoleGameSolution
                     gameOver = true;
 
                 stopwatch.Stop();
-                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 80);
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
                 Thread.Sleep(sleepTime);
             }
 
@@ -263,11 +271,146 @@ namespace ConsoleGameSolution
 
             if (death)
                 Console.WriteLine("You've lost.");
+            else score = 1000;
 
-            else Console.WriteLine("You win!");
-            Console.WriteLine("Escape to exit.");
-            while (Console.ReadKey(true).Key != ConsoleKey.Escape)
-            { }
+            Thread.Sleep(1000);
+            return score;
+        }
+
+        public static int Level2(char playerSymbol)
+        {
+            int score = 0;
+            PrepareConsole();
+            const int frameDelay = 100;
+            var stopwatch = new Stopwatch();
+            
+            var field = new Field();
+            var gameWalls = DrawWalls();
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.CreateCoordinatesStatistics(playerSymbol);
+
+            DestinationPoint destinationPoint = new DestinationPoint();
+            destinationPoint.Create();
+            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+
+            bool death = false;
+            bool gameOver = false;
+            while (!gameOver)
+            {
+                stopwatch.Start();
+                
+                if (Console.KeyAvailable)
+                {
+                    var keyPressed = Console.ReadKey(true).Key;
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+                    if (keyPressed == ConsoleKey.Escape) break;
+                    
+                    player.Move(playerSymbol, gameWalls, keyPressed);
+                }
+                
+                //d4n0n - подготовить новых мобов и вставить сюда физику их движения
+                //или использовать Ghost
+
+                //d4n0n - также добавить проверку на смерть игрока от этих врагов
+
+                //Непонятно ? Смотри пример в Level1, он дописан.
+
+                if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
+                    gameOver = true;
+
+                stopwatch.Stop();
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
+                Thread.Sleep(sleepTime);
+            }
+            Console.Clear();
+
+            if (death)
+                Console.WriteLine("You've lost.");
+            else score = 1000;
+
+            Thread.Sleep(1000);
+            return score;
+        }
+
+        public static void PrepareConsole()
+        {
+            Console.Clear();
+            Console.BufferWidth = Console.WindowWidth = 36;
+            Console.BufferHeight = Console.WindowHeight = 26;
+            Console.CursorVisible = false;
+        }
+
+        public static void DrawInterface()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.BufferWidth = Console.WindowWidth = 60;
+            Console.BufferHeight = Console.WindowHeight = 20;
+            Console.CursorVisible = false;
+
+            for (int x = 0; x < Console.WindowWidth - 1; x++)
+                for (int y = 0; y < Console.WindowHeight; y++)
+                    if (x < 8 || y < 5 || x > Console.WindowWidth - 10 || y > Console.WindowHeight - 5)
+                    {
+                        Console.SetCursorPosition(x, y);
+                        Console.Write('#');
+                    }
+        }
+
+        public static void ShowFinalScore()
+        {
+            DrawInterface();
+            Console.SetCursorPosition(9, 7);
+            Console.Write("Your score:");
+            Console.SetCursorPosition(9, 10);
+            Console.WriteLine(playerScore);
+            Thread.Sleep(2000);
+        }
+
+        public static void Main()
+        {
+            DrawInterface();
+
+            Console.SetCursorPosition(9, 6);
+            Console.Write("Welcome! Choose your chip.");
+            Console.WriteLine();
+            Console.SetCursorPosition(9, 8);
+            Console.Write("1 - @, 2 - e, 3 - &");
+            Char playerSymbol = ' ';
+            Console.SetCursorPosition(9, 10);
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    playerSymbol = '@';
+                    break;
+                case "2":
+                    playerSymbol = 'e';
+                    break;
+                case "3":
+                    playerSymbol = '&';
+                    break;
+                default:
+                    Console.SetCursorPosition(9, 10);
+                    Console.Write("Chip is not availible");
+                    Thread.Sleep(1000);
+                    return;
+            }
+
+            playerScore += Level1(playerSymbol);
+            
+            if (playerScore < 1000)
+            {
+                ShowFinalScore();
+                return;
+            }
+
+            playerScore += Level2(playerSymbol);
+
+            DrawInterface();
+            ShowFinalScore();
+
         }
     }
 }
