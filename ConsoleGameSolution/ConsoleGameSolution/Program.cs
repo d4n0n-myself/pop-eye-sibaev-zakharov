@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Drawing;
 
 namespace ConsoleGameSolution
 {
@@ -55,13 +56,11 @@ namespace ConsoleGameSolution
 
         public class Player : Object
         {
-            public void CreateCoordinatesStatistics(char playerSymbol)
+            public void ShowCoordinatesStatistics(char playerSymbol)
             {
                 Object.WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
                 Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 1);
-                Console.Write(X);
-                Console.Write(' ');
-                Console.Write(Y);
+                Console.Write("X: {0}  Y: {1}",X,Y);
             }
 
             private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
@@ -112,12 +111,7 @@ namespace ConsoleGameSolution
                         break;
                 }
 
-                WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-
-                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 1);
-                Console.Write(X);
-                Console.Write(' ');
-                Console.Write(Y);
+                ShowCoordinatesStatistics(playerSymbol);
             }
         }
 
@@ -174,6 +168,88 @@ namespace ConsoleGameSolution
             }
         }
 
+        public class Ball : Object
+        {
+            public bool DirectedToRightSide;
+
+            public void CanTakePoint(int yPos, bool[,] walls)
+            {
+                var random = new Random();
+
+                while (Y == yPos || walls[X, Y])
+                    yPos = random.Next(Field.YLimit / 4) + Field.YLimit / 4;
+            }
+
+            public List<Ball> Create(bool[,] walls)
+            {
+                var balls = new List<Ball>();
+                var random = new Random();
+                var countOfBalls = random.Next(4,6);
+
+                for (int i = 0; i < countOfBalls; i++)
+                {
+                    var xPos = random.Next(Field.XLimit) + 1;
+                    var yPos = random.Next(Field.YLimit / 4) * 2 + 1;
+                    var randomDirection = random.Next(2);
+
+                    foreach (var ball in balls)
+                        ball.CanTakePoint(yPos,walls);
+
+                    balls.Add(new Ball { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
+                    WriteSymbol(balls[i].X, balls[i].Y, 'o', ConsoleColor.Blue);
+                }
+
+                return balls;
+            }
+
+            public void Move(bool[,] walls)
+            {
+                WriteSymbol(X, Y, ' ');
+
+                if (Y + 1 < Field.YLimit + 1 && !walls[X, Y + 1])
+                {
+                    Y++;
+                    WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
+                    return;
+                }
+                if (X + 1 < Field.XLimit + 1 && DirectedToRightSide)
+                {
+                    X++;
+                    WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
+                    return;
+                }
+                if (X == Field.XLimit) DirectedToRightSide = false;
+                if (X - 1 > 0 && !DirectedToRightSide)
+                {
+                    X--;
+                    WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
+                    return;
+                }
+                if (X == 1) DirectedToRightSide = true;
+            }
+        }
+
+        public class Teleport : Object
+        {
+            public void PlaceTeleport(bool[,] walls, DestinationPoint point)
+            {
+                var random = new Random();
+                var x = 0;
+                var y = 0;
+
+                while (walls[x, y] || (point.X == this.X && point.Y == this.Y))
+                {
+                    x = random.Next(Field.XLimit) + 1;
+                    y = random.Next(Field.YLimit) + 1;
+                }
+
+                X = x;
+                Y = y;
+
+                WriteSymbol(X,Y,'O');
+            }
+        }
+
         public static bool[,] DrawWalls()
         {
             bool[,] gameWalls = new bool[Field.XLimit + 2, Field.YLimit + 2];
@@ -211,13 +287,15 @@ namespace ConsoleGameSolution
 
             // Создаём игровые объекты
             var field = new Field();
+            Console.SetCursorPosition(0, Field.YLimit + 2);
+            Console.Write("Level 1");
 
             ////d4n0n - Создать стены(пример обводки)
             var gameWalls = DrawWalls();
 
             //d4n0n - player create
             Player player = new Player { X = 1, Y = Field.YLimit };
-            player.CreateCoordinatesStatistics(playerSymbol);
+            player.ShowCoordinatesStatistics(playerSymbol);
 
             //d4n0n - создать ghost'ов
             var ghosts = new Ghost().CreateGhosts();
@@ -271,7 +349,11 @@ namespace ConsoleGameSolution
 
             if (death)
                 Console.WriteLine("You've lost.");
-            else score = 1000;
+            else
+            {
+                Console.WriteLine("Level completed.");
+                score = 1000;
+            }
 
             Thread.Sleep(1000);
             return score;
@@ -285,13 +367,20 @@ namespace ConsoleGameSolution
             var stopwatch = new Stopwatch();
             
             var field = new Field();
+            Console.SetCursorPosition(0, Field.YLimit + 2);
+            Console.Write("Level 2");
             var gameWalls = DrawWalls();
-            Player player = new Player { X = 1, Y = Field.YLimit };
-            player.CreateCoordinatesStatistics(playerSymbol);
-
             DestinationPoint destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            var teleport = new Teleport();
+            teleport.PlaceTeleport(gameWalls,destinationPoint);
+            
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+
+            //d4n0n - Create Falling Balls
+            var balls = new Ball().Create(gameWalls);
 
             bool death = false;
             bool gameOver = false;
@@ -308,13 +397,45 @@ namespace ConsoleGameSolution
                     
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
-                
+
                 //d4n0n - подготовить новых мобов и вставить сюда физику их движения
                 //или использовать Ghost
 
                 //d4n0n - также добавить проверку на смерть игрока от этих врагов
 
                 //Непонятно ? Смотри пример в Level1, он дописан.
+
+                if (player.X == teleport.X && player.Y == teleport.Y)
+                {
+                    Object.WriteSymbol(player.X, player.Y, ' ');
+                    var random = new Random();
+                    teleport.PlaceTeleport(gameWalls,destinationPoint);
+                    player.X = teleport.X;
+                    player.Y = teleport.Y;
+                    Object.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Blue);
+                    Object.WriteSymbol(player.X, player.Y, ' ');
+                    Object.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Yellow);
+                    teleport.X = 0;
+                    teleport.Y = 0;
+                }
+
+                foreach (var ball in balls)
+                {
+                    ball.Move(gameWalls);
+                    if (player.X == ball.X && player.Y == ball.Y)
+                    {
+                        death = true;
+                        gameOver = true;
+                    }
+                    if (ball.X == teleport.X && ball.Y == teleport.Y)
+                    {
+                        Object.WriteSymbol(teleport.X, teleport.Y, ' ');
+                        teleport.X = 0;
+                        teleport.Y = 0;
+                    }
+                }
+
+                Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -323,11 +444,17 @@ namespace ConsoleGameSolution
                 int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
                 Thread.Sleep(sleepTime);
             }
+
             Console.Clear();
 
             if (death)
                 Console.WriteLine("You've lost.");
-            else score = 1000;
+            else
+            {
+                Console.WriteLine("Level completed.");
+                score = 1000;
+            }
+
 
             Thread.Sleep(1000);
             return score;
@@ -351,7 +478,7 @@ namespace ConsoleGameSolution
 
             for (int x = 0; x < Console.WindowWidth - 1; x++)
                 for (int y = 0; y < Console.WindowHeight; y++)
-                    if (x < 8 || y < 5 || x > Console.WindowWidth - 10 || y > Console.WindowHeight - 5)
+                    if (x < 3 || y < 3 || x > Console.WindowWidth - 5 || y > Console.WindowHeight - 4)
                     {
                         Console.SetCursorPosition(x, y);
                         Console.Write('#');
