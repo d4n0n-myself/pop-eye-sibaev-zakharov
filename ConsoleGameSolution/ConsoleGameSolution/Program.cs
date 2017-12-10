@@ -15,6 +15,58 @@ namespace ConsoleGameSolution
 
     class Program
     {
+        #region
+        //kirills changes
+        /*public class Beast : Object
+        {
+             public List<Beast> CreateBeasts()
+             {
+                var beasts = new List<Beasts>();
+                var random = new Random();
+                var countOfBeasts = random.Next(5, Field.YLimit / 2 + 1);
+             }
+        }
+        public class Heart : Object
+        {
+             public List<Heart> CreateHearts()
+             {
+                var hearts = new List<Hearts>();
+                var random = new Random();
+                var countOfHearts = random.Next(5, Field.YLimit / 2 + 1);
+             }
+        }*/
+        
+        public class Button : Object //KIRI : Данель, там первым уровнем идет мой, думаю ты поймешь что к чему, в Move Player кое-что добавил, зафиксировал выход с уровня
+        {
+            public List<Button> CreateButtons()
+            {
+                var buttons = new List<Button>();
+                var random = new Random();
+                var countOfButtons = 4;
+                for (int i = 0; i < countOfButtons; i++)
+                {
+                    var xPos = random.Next(1, Field.XLimit);
+                    var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
+                    
+
+                    foreach (var button in buttons)
+                        if (button.Y == yPos)
+                            yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
+
+                    buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false });
+                    WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.DarkCyan);
+                }
+
+                return buttons;
+            }
+        }
+        public static bool isOpened;
+
+
+        
+
+        #endregion
+
         public static int playerScore;
 
         public class Field
@@ -37,6 +89,7 @@ namespace ConsoleGameSolution
         {
             public int X { get; set; }
             public int Y { get; set; }
+            public bool IsStepped { get; set; }
 
             public static void WriteSymbol(int x, int y, Char symbol)
             {
@@ -94,6 +147,16 @@ namespace ConsoleGameSolution
                         }
                         break;
                     case ConsoleKey.D:
+                        if (X==Field.XLimit-2 && Y==1)
+                        {
+                            if(isOpened==true)
+                            {
+                                X++;
+                                WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                                Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
+                            }
+                        }
+                        else 
                         if (X < Field.XLimit && !walls[X + 1, Y])
                         {
                             X++;
@@ -118,9 +181,8 @@ namespace ConsoleGameSolution
         public class DestinationPoint : Object
         {
             public DestinationPoint Create()
-            {
-                var random = new Random();
-                X = random.Next(Field.XLimit) + 1;
+            {                                                              //var random = new Random();
+                X = Field.XLimit ;                                         //random.Next(Field.XLimit) + 1;
                 Y = 1;
                 return this;
             }
@@ -401,6 +463,7 @@ namespace ConsoleGameSolution
                 //d4n0n - подготовить новых мобов и вставить сюда физику их движения
                 //или использовать Ghost
 
+
                 //d4n0n - также добавить проверку на смерть игрока от этих врагов
 
                 //Непонятно ? Смотри пример в Level1, он дописан.
@@ -471,9 +534,15 @@ namespace ConsoleGameSolution
             Console.SetCursorPosition(0, Field.YLimit + 2);
             Console.Write("Level 3");
             var gameWalls = DrawWalls();
+
+            var buttons = new Button().CreateButtons();
+            var countOfButtons=4;
+            isOpened=false;
+
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            Object.WriteSymbol(destinationPoint.X-1,destinationPoint.Y, '[', ConsoleColor.Red); //1
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
 
@@ -500,6 +569,19 @@ namespace ConsoleGameSolution
                 //d4n0n - также добавить проверку на смерть игрока от этих врагов
 
                 //Непонятно ? Смотри пример в Level1, он дописан.
+                for (int i = 0; i < buttons.Count; i++)
+                    if (player.X == buttons[i].X && player.Y == buttons[i].Y && buttons[i].IsStepped==false)
+                    {
+                        countOfButtons--;
+                        buttons[i].IsStepped=true;
+                        Object.WriteSymbol(buttons[i].X,buttons[i].Y, 'B', ConsoleColor.Green);
+                    }
+                if (countOfButtons==0)
+                {
+                    Object.WriteSymbol(destinationPoint.X-1,destinationPoint.Y, '[', ConsoleColor.Green);
+                    isOpened=true;
+                }
+
                 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -695,7 +777,7 @@ namespace ConsoleGameSolution
             Console.Write("Welcome! Choose your chip.");
             Console.WriteLine();
             Console.SetCursorPosition(9, 8);
-            Console.Write("1 - @, 2 - e, 3 - &");
+            Console.Write("1 - @, 2 - є, 3 - &");
             Char playerSymbol = ' ';
             Console.SetCursorPosition(9, 10);
 
@@ -705,7 +787,7 @@ namespace ConsoleGameSolution
                     playerSymbol = '@';
                     break;
                 case "2":
-                    playerSymbol = 'e';
+                    playerSymbol = 'є';
                     break;
                 case "3":
                     playerSymbol = '&';
@@ -717,7 +799,7 @@ namespace ConsoleGameSolution
                     return;
             }
             
-            playerScore += Level1(playerSymbol);
+            playerScore += Level3(playerSymbol);
 
             if (playerScore < 1000)
             {
@@ -725,7 +807,7 @@ namespace ConsoleGameSolution
                 return;
             }
 
-            playerScore += Level2(playerSymbol);
+            playerScore += Level1(playerSymbol);
 
             if (playerScore < 2000)
             {
@@ -733,7 +815,7 @@ namespace ConsoleGameSolution
                 return;
             }
 
-            playerScore += Level3(playerSymbol);
+            playerScore += Level2(playerSymbol);
 
             if (playerScore < 3000)
             {
