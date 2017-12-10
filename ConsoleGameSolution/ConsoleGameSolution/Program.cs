@@ -301,7 +301,7 @@ namespace ConsoleGameSolution
             var ghosts = new Ghost().CreateGhosts();
 
             //d4n0n - создание destination point
-            DestinationPoint destinationPoint = new DestinationPoint();
+            var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
@@ -370,7 +370,7 @@ namespace ConsoleGameSolution
             Console.SetCursorPosition(0, Field.YLimit + 2);
             Console.Write("Level 2");
             var gameWalls = DrawWalls();
-            DestinationPoint destinationPoint = new DestinationPoint();
+            var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             var teleport = new Teleport();
@@ -460,6 +460,198 @@ namespace ConsoleGameSolution
             return score;
         }
 
+        public static int Level3(char playerSymbol)
+        {
+            int score = 0;
+            PrepareConsole();
+            const int frameDelay = 100;
+            var stopwatch = new Stopwatch();
+
+            var field = new Field();
+            Console.SetCursorPosition(0, Field.YLimit + 2);
+            Console.Write("Level 3");
+            var gameWalls = DrawWalls();
+            var destinationPoint = new DestinationPoint();
+            destinationPoint.Create();
+            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+
+            bool death = false;
+            bool gameOver = false;
+            while (!gameOver)
+            {
+                stopwatch.Start();
+
+                if (Console.KeyAvailable)
+                {
+                    var keyPressed = Console.ReadKey(true).Key;
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+                    if (keyPressed == ConsoleKey.Escape) break;
+
+                    player.Move(playerSymbol, gameWalls, keyPressed);
+                }
+
+                //d4n0n - подготовить новых мобов и вставить сюда физику их движения
+                //или использовать Ghost
+                //или Ball
+
+                //d4n0n - также добавить проверку на смерть игрока от этих врагов
+
+                //Непонятно ? Смотри пример в Level1, он дописан.
+                
+                if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
+                    gameOver = true;
+
+                stopwatch.Stop();
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
+                Thread.Sleep(sleepTime);
+            }
+
+            Console.Clear();
+
+            if (death)
+                Console.WriteLine("You've lost.");
+            else
+            {
+                Console.WriteLine("Level completed.");
+                score = 1000;
+            }
+
+
+            Thread.Sleep(1000);
+            return score;
+        }
+
+        public static int Level4(char playerSymbol)
+        {
+            int score = 0;
+            PrepareConsole();
+            const int frameDelay = 100;
+            var stopwatch = new Stopwatch();
+
+            var field = new Field();
+            Console.SetCursorPosition(0, Field.YLimit + 2);
+            Console.Write("Level 4");
+            var gameWalls = DrawWalls();
+            var destinationPoint = new DestinationPoint();
+            destinationPoint.Create();
+            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+
+            bool death = false;
+            bool gameOver = false;
+            while (!gameOver)
+            {
+                stopwatch.Start();
+
+                if (Console.KeyAvailable)
+                {
+                    var keyPressed = Console.ReadKey(true).Key;
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+                    if (keyPressed == ConsoleKey.Escape) break;
+
+                    player.Move(playerSymbol, gameWalls, keyPressed);
+                }
+
+                //d4n0n - подготовить новых мобов и вставить сюда физику их движения
+                //или использовать Ghost
+                //или Ball
+
+                //d4n0n - также добавить проверку на смерть игрока от этих врагов
+
+                //Непонятно ? Смотри пример в Level1, он дописан.
+
+                if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
+                    gameOver = true;
+
+                stopwatch.Stop();
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
+                Thread.Sleep(sleepTime);
+            }
+
+            Console.Clear();
+
+            if (death)
+                Console.WriteLine("You've lost.");
+            else
+            {
+                Console.WriteLine("Level completed.");
+                score = 1000;
+            }
+
+
+            Thread.Sleep(1000);
+            return score;
+        }
+
+        public static int Level5(char playerSymbol)
+        {
+            int score = 0;
+            PrepareConsole();
+            const int frameDelay = 100;
+            var stopwatch = new Stopwatch();
+
+            var field = new Field();
+            Console.SetCursorPosition(0, Field.YLimit + 2);
+            Console.Write("Level 4");
+            var gameWalls = DrawWalls();
+            var destinationPoint = new DestinationPoint();
+            destinationPoint.Create();
+            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+
+            bool death = false;
+            bool gameOver = false;
+            while (!gameOver)
+            {
+                stopwatch.Start();
+
+                if (Console.KeyAvailable)
+                {
+                    var keyPressed = Console.ReadKey(true).Key;
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+                    if (keyPressed == ConsoleKey.Escape) break;
+
+                    player.Move(playerSymbol, gameWalls, keyPressed);
+                }
+
+                //d4n0n - подготовить новых мобов и вставить сюда физику их движения
+                //или использовать Ghost
+                //или Ball
+
+                //d4n0n - также добавить проверку на смерть игрока от этих врагов
+
+                //Непонятно ? Смотри пример в Level1, он дописан.
+
+                if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
+                    gameOver = true;
+
+                stopwatch.Stop();
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
+                Thread.Sleep(sleepTime);
+            }
+
+            Console.Clear();
+
+            if (death)
+                Console.WriteLine("You've lost.");
+            else
+            {
+                Console.WriteLine("Level completed.");
+                score = 1000;
+            }
+
+
+            Thread.Sleep(1000);
+            return score;
+        }
+
         public static void PrepareConsole()
         {
             Console.Clear();
@@ -524,9 +716,9 @@ namespace ConsoleGameSolution
                     Thread.Sleep(1000);
                     return;
             }
-
-            playerScore += Level1(playerSymbol);
             
+            playerScore += Level1(playerSymbol);
+
             if (playerScore < 1000)
             {
                 ShowFinalScore();
@@ -534,6 +726,30 @@ namespace ConsoleGameSolution
             }
 
             playerScore += Level2(playerSymbol);
+
+            if (playerScore < 2000)
+            {
+                ShowFinalScore();
+                return;
+            }
+
+            playerScore += Level3(playerSymbol);
+
+            if (playerScore < 3000)
+            {
+                ShowFinalScore();
+                return;
+            }
+
+            playerScore += Level4(playerSymbol);
+
+            if (playerScore < 4000)
+            {
+                ShowFinalScore();
+                return;
+            }
+
+            playerScore += Level5(playerSymbol);
 
             DrawInterface();
             ShowFinalScore();
