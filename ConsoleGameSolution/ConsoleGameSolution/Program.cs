@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Dynamic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
-using System.Drawing;
 
 namespace ConsoleGameSolution
 {
@@ -15,176 +11,22 @@ namespace ConsoleGameSolution
 
     class Program
     {
-        #region
-        //kirills changes
-        /*public class Beast : Object
-        {
-             public List<Beast> CreateBeasts()
-             {
-                var beasts = new List<Beasts>();
-                var random = new Random();
-                var countOfBeasts = random.Next(5, Field.YLimit / 2 + 1);
-             }
-        }
-        public class Heart : Object
-        {
-             public List<Heart> CreateHearts()
-             {
-                var hearts = new List<Hearts>();
-                var random = new Random();
-                var countOfHearts = random.Next(5, Field.YLimit / 2 + 1);
-             }
-        }*/
-        
-        public class Button : Object //KIRI : Данель, там первым уровнем идет мой, думаю ты поймешь что к чему, в Move Player кое-что добавил, зафиксировал выход с уровня
-        {
-            public List<Button> CreateButtons()
-            {
-                var buttons = new List<Button>();
-                var random = new Random();
-                var countOfButtons = 4;
-                for (int i = 0; i < countOfButtons; i++)
-                {
-                    var xPos = random.Next(1, Field.XLimit);
-                    var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
-                    
-
-                    foreach (var button in buttons)
-                        if (button.Y == yPos)
-                            yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
-
-                    buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false });
-                    WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.DarkCyan);
-                }
-
-                return buttons;
-            }
-        }
-        public static bool isOpened;
-
-
-        
-
-        #endregion
-
+            
         public static int playerScore;
 
-        public class Field
+        #region <Enemies>
+        public class Beast : Object
         {
-            public static int XLimit;
-            public static int YLimit;
-
-            public Field()
-                : this(Console.WindowWidth - 1, Console.WindowHeight - 1)
-            { }
-
-            public Field(int xLimit, int yLimit)
+            public List<Beast> CreateBeasts()
             {
-                XLimit = xLimit - 2;
-                YLimit = yLimit - 2;
-            }
-        }
-
-        public class Object
-        {
-            public int X { get; set; }
-            public int Y { get; set; }
-            public bool IsStepped { get; set; }
-
-            public static void WriteSymbol(int x, int y, Char symbol)
-            {
-                Console.SetCursorPosition(x, y);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(symbol);
-            }
-
-            public static void WriteSymbol(int x, int y, Char symbol, ConsoleColor color)
-            {
-                Console.SetCursorPosition(x, y);
-                Console.ForegroundColor = color;
-                Console.Write(symbol);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-        }
-
-        public class Player : Object
-        {
-            public void ShowCoordinatesStatistics(char playerSymbol)
-            {
-                Object.WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight - 1);
-                Console.Write("X: {0}  Y: {1}",X,Y);
-            }
-
-            private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
-            {
-                if (!walls[X, Y + 1])
-                {
-                    Thread.Sleep(100);
-                    WriteSymbol(X, Y, ' ');
-                    Y++;
-                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Magenta);
-                    Thread.Sleep(100);
-                    WriteSymbol(X, Y, ' ');
-                    Y++;
-                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                }
-
-                return Y;
-            }
-
-            public void Move(char playerSymbol, bool[,] walls, ConsoleKey direction)
-            {
-                WriteSymbol(X, Y, ' ');
-                switch (direction)
-                {
-                    case ConsoleKey.A:
-                        if (X > 1 && !walls[X - 1, Y])
-                        {
-                            X--;
-                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
-                        }
-                        break;
-                    case ConsoleKey.D:
-                        if (X==Field.XLimit-2 && Y==1)
-                        {
-                            if(isOpened==true)
-                            {
-                                X++;
-                                WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                                Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
-                            }
-                        }
-                        else 
-                        if (X < Field.XLimit && !walls[X + 1, Y])
-                        {
-                            X++;
-                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
-                        }
-                        break;
-                    case ConsoleKey.W:
-                        if (Y > 1 && !walls[X, Y - 1])
-                            Y--;
-                        break;
-                    case ConsoleKey.S:
-                        if (Y < Field.YLimit && !walls[X, Y + 1])
-                            Y++;
-                        break;
-                }
-
-                ShowCoordinatesStatistics(playerSymbol);
-            }
-        }
-
-        public class DestinationPoint : Object
-        {
-            public DestinationPoint Create()
-            {                                                              //var random = new Random();
-                X = Field.XLimit ;                                         //random.Next(Field.XLimit) + 1;
-                Y = 1;
-                return this;
+                //d4n0n: придумал реализацию - если beast находится в расстоянии < (сколько-нибудь) до игрока
+                //включает beast mode -
+                // 1) Либо ломает стены насквозь
+                // 2) Либо увеличивает скорость перемещения
+                var beasts = new List<Beast>();
+                var random = new Random();
+                var countOfBeasts = random.Next(5, Field.YLimit / 2 + 1);
+                return beasts;
             }
         }
 
@@ -246,7 +88,7 @@ namespace ConsoleGameSolution
             {
                 var balls = new List<Ball>();
                 var random = new Random();
-                var countOfBalls = random.Next(4,6);
+                var countOfBalls = random.Next(4, 6);
 
                 for (int i = 0; i < countOfBalls; i++)
                 {
@@ -255,7 +97,7 @@ namespace ConsoleGameSolution
                     var randomDirection = random.Next(2);
 
                     foreach (var ball in balls)
-                        ball.CanTakePoint(yPos,walls);
+                        ball.CanTakePoint(yPos, walls);
 
                     balls.Add(new Ball { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
                     WriteSymbol(balls[i].X, balls[i].Y, 'o', ConsoleColor.Blue);
@@ -280,14 +122,55 @@ namespace ConsoleGameSolution
                     WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
                     return;
                 }
-                if (X == Field.XLimit) DirectedToRightSide = false;
                 if (X - 1 > 0 && !DirectedToRightSide)
                 {
                     X--;
                     WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
                     return;
                 }
+                if (X == 1 && Y == Field.YLimit) Y = 1;
                 if (X == 1) DirectedToRightSide = true;
+                if (X == Field.XLimit) DirectedToRightSide = false;
+            }
+        }
+        #endregion
+
+        #region <Entities>
+        public class Heart : Object
+        {
+            //KIRI:добавочные жизни игроку
+            //лежат на карте, игрок подбирает и LivesCount++;
+            public List<Heart> CreateHearts()
+            {
+                var hearts = new List<Heart>();
+                var random = new Random();
+                var countOfHearts = random.Next(5, Field.YLimit / 2 + 1);
+                return hearts;
+            }
+        }
+
+        public class Button : Object //KIRI : Данель, там первым уровнем идет мой, думаю ты поймешь что к чему, в Move Player кое-что добавил, зафиксировал выход с уровня
+        {
+            public List<Button> CreateButtons()
+            {
+                var buttons = new List<Button>();
+                var random = new Random();
+                var countOfButtons = 4;
+                for (int i = 0; i < countOfButtons; i++)
+                {
+                    var xPos = random.Next(1, Field.XLimit);
+                    var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
+                    
+
+                    foreach (var button in buttons)
+                        if (button.Y == yPos)
+                            yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
+
+                    buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false });
+                    WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.DarkCyan);
+                }
+
+                return buttons;
             }
         }
 
@@ -308,7 +191,133 @@ namespace ConsoleGameSolution
                 X = x;
                 Y = y;
 
-                WriteSymbol(X,Y,'O');
+                WriteSymbol(X, Y, 'O');
+            }
+        }
+        #endregion
+
+        public class Field
+        {
+            public static int XLimit;
+            public static int YLimit;
+
+            public Field()
+                : this(Console.WindowWidth - 1, Console.WindowHeight - 1)
+            { }
+
+            public Field(int xLimit, int yLimit)
+            {
+                XLimit = xLimit - 2;
+                YLimit = yLimit - 2;
+            }
+        }
+
+        public class Object
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
+            public bool IsStepped { get; set; }
+
+            public static void WriteSymbol(int x, int y, Char symbol)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(symbol);
+            }
+
+            public static void WriteSymbol(int x, int y, Char symbol, ConsoleColor color)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = color;
+                Console.Write(symbol);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+
+            public static void WriteLevelNumber(int x, int y, string level, ConsoleColor color)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = color;
+                Console.Write(level);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+
+        public class Player : Object
+        {
+            public int LivesCount;
+
+            public void UpdateLivesCount()
+            {
+                Console.SetCursorPosition(6, Field.YLimit + 2);
+                Console.Write("LivesCount:", LivesCount);
+            }
+
+            public void ShowCoordinatesStatistics(char playerSymbol)
+            {
+                WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                Console.SetCursorPosition(Field.XLimit - 10, Console.WindowHeight - 1);
+                Console.Write("X: {0}  Y: {1}",X,Y);
+            }
+
+            private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
+            {
+                if (!walls[X, Y + 1])
+                {
+                    Thread.Sleep(100);
+                    WriteSymbol(X, Y, ' ');
+                    Y++;
+                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Magenta);
+                    Thread.Sleep(100);
+                    WriteSymbol(X, Y, ' ');
+                    Y++;
+                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                }
+
+                return Y;
+            }
+
+            public void Move(char playerSymbol, bool[,] walls, ConsoleKey direction)
+            {
+                WriteSymbol(X, Y, ' ');
+                switch (direction)
+                {
+                    case ConsoleKey.A:
+                        if (X > 1 && !walls[X - 1, Y])
+                        {
+                            X--;
+                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
+                        }
+                        break;
+                    case ConsoleKey.D:
+                        if (X < Field.XLimit && !walls[X + 1, Y])
+                        {
+                            X++;
+                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
+                        }
+                        break;
+                    case ConsoleKey.W:
+                        if (Y > 1 && !walls[X, Y - 1])
+                            Y--;
+                        break;
+                    case ConsoleKey.S:
+                        if (Y < Field.YLimit && !walls[X, Y + 1])
+                            Y++;
+                        break;
+                }
+
+                ShowCoordinatesStatistics(playerSymbol);
+            }
+        }
+
+        public class DestinationPoint : Object
+        {
+            public DestinationPoint Create()
+            {                                                              //var random = new Random();
+                X = Field.XLimit ;                                         //random.Next(Field.XLimit) + 1;
+                Y = 1;
+                return this;
             }
         }
 
@@ -340,65 +349,70 @@ namespace ConsoleGameSolution
             return gameWalls;
         }
 
-        public static int Level1(char playerSymbol) 
+        #region <Levels>
+        public static int Level1(char playerSymbol)
         {
+            #region <Default parametrs and creation>
             int score = 0;
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
 
-            // Создаём игровые объекты
             var field = new Field();
-            Console.SetCursorPosition(0, Field.YLimit + 2);
-            Console.Write("Level 1");
-
-            ////d4n0n - Создать стены(пример обводки)
+            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 1", ConsoleColor.Cyan);
             var gameWalls = DrawWalls();
 
-            //d4n0n - player create
-            Player player = new Player { X = 1, Y = Field.YLimit };
-            player.ShowCoordinatesStatistics(playerSymbol);
+            var buttons = new Button().CreateButtons();
+            var countOfButtons = 4;
 
-            //d4n0n - создать ghost'ов
-            var ghosts = new Ghost().CreateGhosts();
+            //d4n0n - это ворота. Они закрывают проход к выходу, пока мы не активируем все кнопочки.
+            var gate = new Object { X = Field.XLimit - 2, Y = 1};
+            Object.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
+            gameWalls[gate.X, gate.Y] = true;
 
-            //d4n0n - создание destination point
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
-
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+            player.UpdateLivesCount();
+            
             bool death = false;
             bool gameOver = false;
-            //Игровой цикл
+            #endregion
+
             while (!gameOver)
             {
                 stopwatch.Start();
 
-                // Обработка нажатий клавиатуры
                 if (Console.KeyAvailable)
                 {
                     var keyPressed = Console.ReadKey(true).Key;
                     while (Console.KeyAvailable)
                         Console.ReadKey(true);
-                    if (keyPressed == ConsoleKey.Escape) break;
-
-                    // Перемещение объектов по нажатию кнопок
-                    player.Move(playerSymbol, gameWalls, keyPressed);
-                }
-
-                // d4n0n - ДВИЖЕНИЕ ghosts
-                for (int i = 0; i < ghosts.Count; i++)
-                    ghosts[i].Move();
-
-                //d4n0n - проверка на столкновение
-                for (int i = 0; i < ghosts.Count; i++)
-                    if (player.X == ghosts[i].X && player.Y == ghosts[i].Y)
+                    if (keyPressed == ConsoleKey.Escape)
                     {
-                        gameOver = true;
                         death = true;
+                        break;
                     }
 
-                //d4n0n -  проверка на достижение цели
+                    player.Move(playerSymbol, gameWalls, keyPressed);
+                }
+                
+                for (int i = 0; i < buttons.Count; i++)
+                    if (player.X == buttons[i].X && player.Y == buttons[i].Y && buttons[i].IsStepped == false)
+                    {
+                        countOfButtons--;
+                        buttons[i].IsStepped = true;
+                        Object.WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.Green);
+                    }
+                if (countOfButtons == 0)
+                {
+                    Object.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Green);
+                    gameWalls[gate.X, gate.Y] = false;
+                }
+
+
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
 
@@ -417,46 +431,54 @@ namespace ConsoleGameSolution
                 score = 1000;
             }
 
+
             Thread.Sleep(1000);
             return score;
         }
-
+        
         public static int Level2(char playerSymbol)
         {
+            #region <Default parametrs and creation>
             int score = 0;
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
-            
+
             var field = new Field();
-            Console.SetCursorPosition(0, Field.YLimit + 2);
-            Console.Write("Level 2");
+            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 2", ConsoleColor.Blue);
             var gameWalls = DrawWalls();
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             var teleport = new Teleport();
-            teleport.PlaceTeleport(gameWalls,destinationPoint);
-            
+            teleport.PlaceTeleport(gameWalls, destinationPoint);
+
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
+            player.UpdateLivesCount();
 
             //d4n0n - Create Falling Balls
             var balls = new Ball().Create(gameWalls);
 
             bool death = false;
             bool gameOver = false;
+            #endregion
+
             while (!gameOver)
             {
                 stopwatch.Start();
-                
+
                 if (Console.KeyAvailable)
                 {
                     var keyPressed = Console.ReadKey(true).Key;
                     while (Console.KeyAvailable)
                         Console.ReadKey(true);
-                    if (keyPressed == ConsoleKey.Escape) break;
-                    
+                    if (keyPressed == ConsoleKey.Escape)
+                    {
+                        death = true;
+                        break;
+                    }
+
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
 
@@ -466,13 +488,13 @@ namespace ConsoleGameSolution
 
                 //d4n0n - также добавить проверку на смерть игрока от этих врагов
 
-                //Непонятно ? Смотри пример в Level1, он дописан.
+                //Непонятно ? Смотри пример в Level3, он дописан.
 
                 if (player.X == teleport.X && player.Y == teleport.Y)
                 {
                     Object.WriteSymbol(player.X, player.Y, ' ');
                     var random = new Random();
-                    teleport.PlaceTeleport(gameWalls,destinationPoint);
+                    teleport.PlaceTeleport(gameWalls, destinationPoint);
                     player.X = teleport.X;
                     player.Y = teleport.Y;
                     Object.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Blue);
@@ -522,67 +544,71 @@ namespace ConsoleGameSolution
             Thread.Sleep(1000);
             return score;
         }
-
-        public static int Level3(char playerSymbol)
+        
+        public static int Level3(char playerSymbol) 
         {
+            #region <Default parametrs and creation>
             int score = 0;
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
 
+            // Создаём игровые объекты
             var field = new Field();
-            Console.SetCursorPosition(0, Field.YLimit + 2);
-            Console.Write("Level 3");
+            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 3", ConsoleColor.Red);
+
+            ////d4n0n - Создать стены(пример обводки)
             var gameWalls = DrawWalls();
 
-            var buttons = new Button().CreateButtons();
-            var countOfButtons=4;
-            isOpened=false;
+            //d4n0n - player create
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+            player.UpdateLivesCount();
 
+            //d4n0n - создать ghost'ов
+            var ghosts = new Ghost().CreateGhosts();
+
+            //d4n0n - создание destination point
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
-            Object.WriteSymbol(destinationPoint.X-1,destinationPoint.Y, '[', ConsoleColor.Red); //1
-            Player player = new Player { X = 1, Y = Field.YLimit };
-            player.ShowCoordinatesStatistics(playerSymbol);
 
             bool death = false;
             bool gameOver = false;
+            #endregion
+            //Игровой цикл
             while (!gameOver)
             {
                 stopwatch.Start();
 
+                // Обработка нажатий клавиатуры
                 if (Console.KeyAvailable)
                 {
                     var keyPressed = Console.ReadKey(true).Key;
                     while (Console.KeyAvailable)
                         Console.ReadKey(true);
-                    if (keyPressed == ConsoleKey.Escape) break;
-
+                    if (keyPressed == ConsoleKey.Escape)
+                    {
+                        death = true;
+                        break;
+                    }
+                    // Перемещение объектов по нажатию кнопок
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
 
-                //d4n0n - подготовить новых мобов и вставить сюда физику их движения
-                //или использовать Ghost
-                //или Ball
+                // d4n0n - ДВИЖЕНИЕ ghosts
+                for (int i = 0; i < ghosts.Count; i++)
+                    ghosts[i].Move();
 
-                //d4n0n - также добавить проверку на смерть игрока от этих врагов
-
-                //Непонятно ? Смотри пример в Level1, он дописан.
-                for (int i = 0; i < buttons.Count; i++)
-                    if (player.X == buttons[i].X && player.Y == buttons[i].Y && buttons[i].IsStepped==false)
+                //d4n0n - проверка на столкновение
+                for (int i = 0; i < ghosts.Count; i++)
+                    if (player.X == ghosts[i].X && player.Y == ghosts[i].Y)
                     {
-                        countOfButtons--;
-                        buttons[i].IsStepped=true;
-                        Object.WriteSymbol(buttons[i].X,buttons[i].Y, 'B', ConsoleColor.Green);
+                        gameOver = true;
+                        death = true;
                     }
-                if (countOfButtons==0)
-                {
-                    Object.WriteSymbol(destinationPoint.X-1,destinationPoint.Y, '[', ConsoleColor.Green);
-                    isOpened=true;
-                }
 
-                
+                //d4n0n -  проверка на достижение цели
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
 
@@ -601,30 +627,32 @@ namespace ConsoleGameSolution
                 score = 1000;
             }
 
-
             Thread.Sleep(1000);
             return score;
         }
-
+        
         public static int Level4(char playerSymbol)
         {
+            #region <Default parametrs and creation>
             int score = 0;
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
 
             var field = new Field();
-            Console.SetCursorPosition(0, Field.YLimit + 2);
-            Console.Write("Level 4");
+            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 4", ConsoleColor.DarkYellow);
             var gameWalls = DrawWalls();
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
+            player.UpdateLivesCount();
 
             bool death = false;
-            bool gameOver = false;
+            bool gameOver = false; 
+            #endregion
+
             while (!gameOver)
             {
                 stopwatch.Start();
@@ -634,7 +662,11 @@ namespace ConsoleGameSolution
                     var keyPressed = Console.ReadKey(true).Key;
                     while (Console.KeyAvailable)
                         Console.ReadKey(true);
-                    if (keyPressed == ConsoleKey.Escape) break;
+                    if (keyPressed == ConsoleKey.Escape)
+                    {
+                        death = true;
+                        break;
+                    }
 
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
@@ -645,7 +677,7 @@ namespace ConsoleGameSolution
 
                 //d4n0n - также добавить проверку на смерть игрока от этих врагов
 
-                //Непонятно ? Смотри пример в Level1, он дописан.
+                //Непонятно ? Смотри пример в Level3, он дописан.
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -672,23 +704,26 @@ namespace ConsoleGameSolution
 
         public static int Level5(char playerSymbol)
         {
+            #region <Default parametrs and creation>
             int score = 0;
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
 
             var field = new Field();
-            Console.SetCursorPosition(0, Field.YLimit + 2);
-            Console.Write("Level 4");
+            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 5", ConsoleColor.Magenta);
             var gameWalls = DrawWalls();
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
+            player.UpdateLivesCount();
 
             bool death = false;
             bool gameOver = false;
+            #endregion
+
             while (!gameOver)
             {
                 stopwatch.Start();
@@ -698,7 +733,11 @@ namespace ConsoleGameSolution
                     var keyPressed = Console.ReadKey(true).Key;
                     while (Console.KeyAvailable)
                         Console.ReadKey(true);
-                    if (keyPressed == ConsoleKey.Escape) break;
+                    if (keyPressed == ConsoleKey.Escape)
+                    {
+                        death = true;
+                        break;
+                    }
 
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
@@ -709,7 +748,7 @@ namespace ConsoleGameSolution
 
                 //d4n0n - также добавить проверку на смерть игрока от этих врагов
 
-                //Непонятно ? Смотри пример в Level1, он дописан.
+                //Непонятно ? Смотри пример в Level3, он дописан.
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -733,6 +772,7 @@ namespace ConsoleGameSolution
             Thread.Sleep(1000);
             return score;
         }
+        #endregion
 
         public static void PrepareConsole()
         {
@@ -769,6 +809,17 @@ namespace ConsoleGameSolution
             Thread.Sleep(2000);
         }
 
+        public static bool CheckAvailabilityToMoveToNextLevel(int countOfCompletedLevels)
+        {
+            if (playerScore < countOfCompletedLevels * 1000)
+            {
+                DrawInterface();
+                ShowFinalScore();
+                return false;
+            }
+            return true;
+        }
+
         public static void Main()
         {
             DrawInterface();
@@ -799,37 +850,17 @@ namespace ConsoleGameSolution
                     return;
             }
             
-            playerScore += Level3(playerSymbol);
-
-            if (playerScore < 1000)
-            {
-                ShowFinalScore();
-                return;
-            }
-
             playerScore += Level1(playerSymbol);
-
-            if (playerScore < 2000)
-            {
-                ShowFinalScore();
-                return;
-            }
+            if (!CheckAvailabilityToMoveToNextLevel(1)) return;
 
             playerScore += Level2(playerSymbol);
+            if (!CheckAvailabilityToMoveToNextLevel(2)) return;
 
-            if (playerScore < 3000)
-            {
-                ShowFinalScore();
-                return;
-            }
+            playerScore += Level3(playerSymbol);
+            if (!CheckAvailabilityToMoveToNextLevel(3)) return;
 
             playerScore += Level4(playerSymbol);
-
-            if (playerScore < 4000)
-            {
-                ShowFinalScore();
-                return;
-            }
+            if (!CheckAvailabilityToMoveToNextLevel(4)) return;
 
             playerScore += Level5(playerSymbol);
 
