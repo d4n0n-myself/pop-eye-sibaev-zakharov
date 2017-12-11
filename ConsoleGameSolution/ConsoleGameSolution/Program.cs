@@ -11,316 +11,8 @@ namespace ConsoleGameSolution
 
     class Program
     {
-            // ссбрасывать секудомер чтобы заработала отработка fps в thread.sleep
         public static int playerScore;
-
-        #region <Enemies>
-        public class Beast : Object
-        {
-            public List<Beast> CreateBeasts()
-            {
-                //d4n0n: придумал реализацию - если beast находится в расстоянии < (сколько-нибудь) до игрока
-                //включает beast mode -
-                // 1) Либо ломает стены насквозь
-                // 2) Либо увеличивает скорость перемещения
-                var beasts = new List<Beast>();
-                var random = new Random();
-                var countOfBeasts = random.Next(5, Field.YLimit / 2 + 1);
-                return beasts;
-            }
-        }
-
-        public class Ghost : Object
-        {
-            public bool DirectedToRightSide;
-
-            public List<Ghost> CreateGhosts()
-            {
-                var ghosts = new List<Ghost>();
-                var random = new Random();
-                var countOfGhosts = random.Next(5, Field.YLimit / 2 + 1);
-
-                for (int i = 0; i < countOfGhosts; i++)
-                {
-                    var xPos = random.Next(1, Field.XLimit);
-                    var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
-                    var randomDirection = random.Next(2);
-
-                    foreach (var ghost in ghosts)
-                        if (ghost.Y == yPos)
-                            yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
-
-                    ghosts.Add(new Ghost { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
-                    WriteSymbol(ghosts[i].X, ghosts[i].Y, 'X', ConsoleColor.Red);
-                }
-
-                return ghosts;
-            }
-
-            public void Move()
-            {
-                WriteSymbol(X, Y, ' ', ConsoleColor.White);
-
-                if (DirectedToRightSide && X < Field.XLimit + 2)
-                    X++;
-                if (X == Field.XLimit + 1) DirectedToRightSide = false;
-                if (DirectedToRightSide == false && X > 0)
-                    X--;
-                if (X == 1) DirectedToRightSide = true;
-
-                WriteSymbol(X, Y, 'X', ConsoleColor.Red);
-            }
-        }
-
-        public class Ball : Object
-        {
-            public bool DirectedToRightSide;
-
-            public void CanTakePoint(int yPos, bool[,] walls)
-            {
-                var random = new Random();
-
-                while (Y == yPos || walls[X, Y])
-                    yPos = random.Next(Field.YLimit / 4) + Field.YLimit / 4;
-            }
-
-            public List<Ball> Create(bool[,] walls)
-            {
-                var balls = new List<Ball>();
-                var random = new Random();
-                var countOfBalls = random.Next(4, 6);
-
-                for (int i = 0; i < countOfBalls; i++)
-                {
-                    var xPos = random.Next(Field.XLimit) + 1;
-                    var yPos = random.Next(Field.YLimit / 4) * 2 + 1;
-                    var randomDirection = random.Next(2);
-
-                    foreach (var ball in balls)
-                        ball.CanTakePoint(yPos, walls);
-
-                    balls.Add(new Ball { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
-                    WriteSymbol(balls[i].X, balls[i].Y, 'o', ConsoleColor.Blue);
-                }
-
-                return balls;
-            }
-
-            public void Move(bool[,] walls)
-            {
-                WriteSymbol(X, Y, ' ');
-
-                if (Y + 1 < Field.YLimit + 1 && !walls[X, Y + 1])
-                {
-                    Y++;
-                    WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
-                    return;
-                }
-                if (X + 1 < Field.XLimit + 1 && DirectedToRightSide)
-                {
-                    X++;
-                    WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
-                    return;
-                }
-                if (X - 1 > 0 && !DirectedToRightSide)
-                {
-                    X--;
-                    WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
-                    return;
-                }
-                if (X == 1 && Y == Field.YLimit) Y = 1;
-                if (X == 1) DirectedToRightSide = true;
-                if (X == Field.XLimit) DirectedToRightSide = false;
-            }
-        }
-        #endregion
-
-        #region <Entities>
-        public class Heart : Object
-        {
-            //KIRI:добавочные жизни игроку
-            //лежат на карте, игрок подбирает и LivesCount++;
-            public List<Heart> CreateHearts()
-            {
-                var hearts = new List<Heart>();
-                var random = new Random();
-                var countOfHearts = random.Next(5, Field.YLimit / 2 + 1);
-                return hearts;
-            }
-        }
-
-        public class Button : Object 
-        {
-            public List<Button> CreateButtons()
-            {
-                var buttons = new List<Button>();
-                var random = new Random();
-                var countOfButtons = 4;
-                for (int i = 0; i < countOfButtons; i++)
-                {
-                    var xPos = random.Next(1, Field.XLimit);
-                    var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
-                    
-
-                    foreach (var button in buttons)
-                        if (button.Y == yPos)
-                            yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
-
-                    buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false });
-                    WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.DarkCyan);
-                }
-
-                return buttons;
-            }
-        }
-
-        public class Teleport : Object
-        {
-            public void PlaceTeleport(bool[,] walls, DestinationPoint point)
-            {
-                var random = new Random();
-                var x = 0;
-                var y = 0;
-
-                while (walls[x, y] || (point.X == this.X && point.Y == this.Y))
-                {
-                    x = random.Next(Field.XLimit) + 1;
-                    y = random.Next(Field.YLimit) + 1;
-                }
-
-                X = x;
-                Y = y;
-
-                WriteSymbol(X, Y, 'O');
-            }
-        }
-        #endregion
-
-        public class Field
-        {
-            public static int XLimit;
-            public static int YLimit;
-
-            public Field()
-                : this(Console.WindowWidth - 1, Console.WindowHeight - 1)
-            { }
-
-            public Field(int xLimit, int yLimit)
-            {
-                XLimit = xLimit - 2;
-                YLimit = yLimit - 2;
-            }
-        }
-
-        public class Object
-        {
-            public int X { get; set; }
-            public int Y { get; set; }
-            public bool IsStepped { get; set; }
-
-            public static void WriteSymbol(int x, int y, Char symbol)
-            {
-                Console.SetCursorPosition(x, y);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(symbol);
-            }
-
-            public static void WriteSymbol(int x, int y, Char symbol, ConsoleColor color)
-            {
-                Console.SetCursorPosition(x, y);
-                Console.ForegroundColor = color;
-                Console.Write(symbol);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-
-            public static void WriteLevelNumber(int x, int y, string level, ConsoleColor color)
-            {
-                Console.SetCursorPosition(x, y);
-                Console.ForegroundColor = color;
-                Console.Write(level);
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-        }
-
-        public class Player : Object
-        {
-            public int LivesCount;
-
-            public void UpdateLivesCount()
-            {
-                Console.SetCursorPosition(6, Field.YLimit + 2);
-                Console.Write("LivesCount:", LivesCount);
-            }
-
-            public void ShowCoordinatesStatistics(char playerSymbol)
-            {
-                WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                Console.SetCursorPosition(Field.XLimit - 10, Console.WindowHeight - 1);
-                Console.Write("X: {0}  Y: {1}",X,Y);
-            }
-
-            private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
-            {
-                if (!walls[X, Y + 1])
-                {
-                    Thread.Sleep(100);
-                    WriteSymbol(X, Y, ' ');
-                    Y++;
-                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Magenta);
-                    Thread.Sleep(100);
-                    WriteSymbol(X, Y, ' ');
-                    Y++;
-                    WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                }
-
-                return Y;
-            }
-
-            public void Move(char playerSymbol, bool[,] walls, ConsoleKey direction)
-            {
-                WriteSymbol(X, Y, ' ');
-                switch (direction)
-                {
-                    case ConsoleKey.A:
-                        if (X > 1 && !walls[X - 1, Y])
-                        {
-                            X--;
-                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
-                        }
-                        break;
-                    case ConsoleKey.D:
-                        if (X < Field.XLimit && !walls[X + 1, Y])
-                        {
-                            X++;
-                            WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
-                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
-                        }
-                        break;
-                    case ConsoleKey.W:
-                        if (Y > 1 && !walls[X, Y - 1])
-                            Y--;
-                        break;
-                    case ConsoleKey.S:
-                        if (Y < Field.YLimit && !walls[X, Y + 1])
-                            Y++;
-                        break;
-                }
-
-                ShowCoordinatesStatistics(playerSymbol);
-            }
-        }
-
-        public class DestinationPoint : Object
-        {
-            public DestinationPoint Create()
-            {                                                              //var random = new Random();
-                X = Field.XLimit ;                                         //random.Next(Field.XLimit) + 1;
-                Y = 1;
-                return this;
-            }
-        }
-
+        
         public static bool[,] DrawWalls()
         {
             bool[,] gameWalls = new bool[Field.XLimit + 2, Field.YLimit + 2];
@@ -344,9 +36,74 @@ namespace ConsoleGameSolution
             for (int i = 0; i < Field.XLimit + 2; i++)
                 for (int j = 0; j < Field.YLimit + 2; j++)
                     if (gameWalls[i, j])
-                        Object.WriteSymbol(i, j, '#', ConsoleColor.Gray);
+                        ConsoleGameSolution.GameObject.WriteSymbol(i, j, '#', ConsoleColor.Gray);
 
             return gameWalls;
+        }
+
+        //d4n0n - preset for level
+        //to make it generalized
+        public static int Level(int lvlNumber, string fileName, char playerSymbol)
+        {
+            int score = 0;
+            PrepareConsole();
+            const int frameDelay = 100;
+            var stopwatch = new Stopwatch();
+
+            var map = MapCreator.CreateMap(fileName);
+            GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level " + lvlNumber, ConsoleColor.Cyan);
+
+            var destinationPoint = new DestinationPoint();
+            destinationPoint.Create();
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+
+            Player player = new Player { X = 1, Y = Field.YLimit };
+            player.ShowCoordinatesStatistics(playerSymbol);
+            player.UpdateLivesCount();
+
+            bool death = false;
+            bool gameOver = false;
+
+            while (!gameOver)
+            {
+                stopwatch.Start();
+
+                if (Console.KeyAvailable)
+                {
+                    var keyPressed = Console.ReadKey(true).Key;
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+                    if (keyPressed == ConsoleKey.Escape)
+                    {
+                        death = true;
+                        break;
+                    }
+
+                    player.Move(playerSymbol, map, keyPressed);
+                }
+                
+                if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
+                    gameOver = true;
+
+                stopwatch.Stop();
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 0);
+                stopwatch.Reset();
+                Thread.Sleep(sleepTime);
+            }
+
+            Console.Clear();
+
+            if (death)
+                Console.WriteLine("You've lost.");
+            else
+            {
+                Console.WriteLine("Level completed.");
+                score = 1000;
+            }
+
+
+            Thread.Sleep(1000);
+            return score;
         }
 
         #region <Levels>
@@ -359,20 +116,21 @@ namespace ConsoleGameSolution
             var stopwatch = new Stopwatch();
 
             var field = new Field();
-            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 1", ConsoleColor.Cyan);
+            GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 1", ConsoleColor.Cyan);
             var gameWalls = DrawWalls();
 
             var buttons = new Button().CreateButtons();
             var countOfButtons = 4;
 
             //d4n0n - это ворота. Они закрывают проход к выходу, пока мы не активируем все кнопочки.
-            var gate = new Object { X = Field.XLimit - 2, Y = 1};
-            Object.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
+            var gate = new GameObject { X = Field.XLimit - 2, Y = 1};
+            GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
             gameWalls[gate.X, gate.Y] = true;
 
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
@@ -404,11 +162,11 @@ namespace ConsoleGameSolution
                     {
                         countOfButtons--;
                         buttons[i].IsStepped = true;
-                        Object.WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.Green);
+                        GameObject.WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.Green);
                     }
                 if (countOfButtons == 0)
                 {
-                    Object.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Green);
+                    GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Green);
                     gameWalls[gate.X, gate.Y] = false;
                 }
 
@@ -417,7 +175,8 @@ namespace ConsoleGameSolution
                     gameOver = true;
 
                 stopwatch.Stop();
-                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 100);
+                int sleepTime = Math.Max(frameDelay - (int)stopwatch.Elapsed.TotalMilliseconds, 0);
+                stopwatch.Reset();
                 Thread.Sleep(sleepTime);
             }
 
@@ -445,11 +204,11 @@ namespace ConsoleGameSolution
             var stopwatch = new Stopwatch();
 
             var field = new Field();
-            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 2", ConsoleColor.Blue);
+            GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 2", ConsoleColor.Blue);
             var gameWalls = DrawWalls();
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             var teleport = new Teleport();
             teleport.PlaceTeleport(gameWalls, destinationPoint);
 
@@ -492,14 +251,14 @@ namespace ConsoleGameSolution
 
                 if (player.X == teleport.X && player.Y == teleport.Y)
                 {
-                    Object.WriteSymbol(player.X, player.Y, ' ');
+                    GameObject.WriteSymbol(player.X, player.Y, ' ');
                     var random = new Random();
                     teleport.PlaceTeleport(gameWalls, destinationPoint);
                     player.X = teleport.X;
                     player.Y = teleport.Y;
-                    Object.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Blue);
-                    Object.WriteSymbol(player.X, player.Y, ' ');
-                    Object.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Yellow);
+                    GameObject.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Blue);
+                    GameObject.WriteSymbol(player.X, player.Y, ' ');
+                    GameObject.WriteSymbol(player.X, player.Y, playerSymbol, ConsoleColor.Yellow);
                     teleport.X = 0;
                     teleport.Y = 0;
                 }
@@ -514,13 +273,13 @@ namespace ConsoleGameSolution
                     }
                     if (ball.X == teleport.X && ball.Y == teleport.Y)
                     {
-                        Object.WriteSymbol(teleport.X, teleport.Y, ' ');
+                        GameObject.WriteSymbol(teleport.X, teleport.Y, ' ');
                         teleport.X = 0;
                         teleport.Y = 0;
                     }
                 }
 
-                Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+                GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -555,7 +314,7 @@ namespace ConsoleGameSolution
 
             // Создаём игровые объекты
             var field = new Field();
-            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 3", ConsoleColor.Red);
+            GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 3", ConsoleColor.Red);
 
             ////d4n0n - Создать стены(пример обводки)
             var gameWalls = DrawWalls();
@@ -571,7 +330,7 @@ namespace ConsoleGameSolution
             //d4n0n - создание destination point
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
             bool death = false;
             bool gameOver = false;
@@ -640,11 +399,11 @@ namespace ConsoleGameSolution
             var stopwatch = new Stopwatch();
 
             var field = new Field();
-            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 4", ConsoleColor.DarkYellow);
+            GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 4", ConsoleColor.DarkYellow);
             var gameWalls = DrawWalls();
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
@@ -711,11 +470,11 @@ namespace ConsoleGameSolution
             var stopwatch = new Stopwatch();
 
             var field = new Field();
-            Object.WriteLevelNumber(0, Field.YLimit + 2, "Level 5", ConsoleColor.Magenta);
+            GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 5", ConsoleColor.Magenta);
             var gameWalls = DrawWalls();
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            Object.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();

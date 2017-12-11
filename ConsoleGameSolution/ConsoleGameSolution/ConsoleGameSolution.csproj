@@ -86,8 +86,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ball.cs" />
+    <Compile Include="Beast.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="DestinationPoint.cs" />
+    <Compile Include="Field.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="Ghost.cs" />
+    <Compile Include="Heart.cs" />
+    <Compile Include="MapCreator.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Teleport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
