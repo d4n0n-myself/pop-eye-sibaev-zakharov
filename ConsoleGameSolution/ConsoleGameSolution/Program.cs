@@ -11,7 +11,7 @@ namespace ConsoleGameSolution
 
     class Program
     {
-            
+            // ссбрасывать секудомер чтобы заработала отработка fps в thread.sleep
         public static int playerScore;
 
         #region <Enemies>
@@ -149,7 +149,7 @@ namespace ConsoleGameSolution
             }
         }
 
-        public class Button : Object //KIRI : Данель, там первым уровнем идет мой, думаю ты поймешь что к чему, в Move Player кое-что добавил, зафиксировал выход с уровня
+        public class Button : Object 
         {
             public List<Button> CreateButtons()
             {
@@ -774,6 +774,7 @@ namespace ConsoleGameSolution
         }
         #endregion
 
+        #region <Systematic>
         public static void PrepareConsole()
         {
             Console.Clear();
@@ -819,7 +820,8 @@ namespace ConsoleGameSolution
             }
             return true;
         }
-
+        #endregion
+        
         public static void Main()
         {
             DrawInterface();
