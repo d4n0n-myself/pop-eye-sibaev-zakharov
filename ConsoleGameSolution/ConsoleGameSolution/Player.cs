@@ -6,11 +6,12 @@ namespace ConsoleGameSolution
     public class Player : GameObject
     {
         public int LivesCount;
+        
 
         public void UpdateLivesCount()
         {
             Console.SetCursorPosition(8, Field.YLimit + 2);
-            Console.Write("LivesCount:", LivesCount);
+            Console.Write("LivesCount:{0}", LivesCount);
         }
 
         public void ShowCoordinatesStatistics(char playerSymbol)

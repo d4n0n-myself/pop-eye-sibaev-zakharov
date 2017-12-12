@@ -7,6 +7,8 @@ namespace ConsoleGameSolution
         public int X { get; set; }
         public int Y { get; set; }
         public bool IsStepped { get; set; }
+        public ConsoleColor color { get; set; }   //kiri
+        public char Symbol { get; set;}   //kiri
 
         public static void WriteSymbol(int x, int y, Char symbol)
         {
@@ -29,6 +31,10 @@ namespace ConsoleGameSolution
             Console.ForegroundColor = color;
             Console.Write(level);
             Console.ForegroundColor = ConsoleColor.White;
+        }
+        public static void UpdateObject(GameObject obj)//kiri created .. если гост вставал на кнопку она исчезала навсегда, нужно было чтото менять, да еще если гост на игрока вставал то игрок исчезал
+        {
+            WriteSymbol(obj.X, obj.Y, obj.Symbol, obj.color);
         }
     }
 

@@ -13,7 +13,7 @@ namespace ConsoleGameSolution
             // 2) Либо увеличивает скорость перемещения
             var beasts = new List<Beast>();
             var random = new Random();
-            var countOfBeasts = random.Next(5, Field.YLimit / 2 + 1);
+            var countOfBeasts = random.Next(2, Field.YLimit / 2 -3);
             return beasts;
         }
     }

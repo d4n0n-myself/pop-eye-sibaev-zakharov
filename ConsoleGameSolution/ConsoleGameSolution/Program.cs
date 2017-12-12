@@ -8,11 +8,13 @@ namespace ConsoleGameSolution
     /// <summary>
     /// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707
     /// </summary>
-
+    /// <ThingsTODO>
+    /// Перенос количества жизней на следующий уровень
+    /// </ThingsTODO>
     class Program
     {
         public static int playerScore;
-        
+
         public static bool[,] DrawWalls()
         {
             bool[,] gameWalls = new bool[Field.XLimit + 2, Field.YLimit + 2];
@@ -81,7 +83,7 @@ namespace ConsoleGameSolution
 
                     player.Move(playerSymbol, map, keyPressed);
                 }
-                
+
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
 
@@ -118,12 +120,17 @@ namespace ConsoleGameSolution
             var field = new Field();
             GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 1", ConsoleColor.Cyan);
             var gameWalls = DrawWalls();
-
-            var buttons = new Button().CreateButtons();
+            var ghosts = new Ghost().CreateGhosts();
             var countOfButtons = 4;
+            var buttons = new Button().CreateButtons(countOfButtons);
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                var button = new GameObject { X = buttons[i].X, Y = buttons[i].Y };
+                GameObject.WriteSymbol(button.X, button.Y, 'B', ConsoleColor.Cyan);
+            }
 
             //d4n0n - это ворота. Они закрывают проход к выходу, пока мы не активируем все кнопочки.
-            var gate = new GameObject { X = Field.XLimit - 2, Y = 1};
+            var gate = new GameObject { X = Field.XLimit - 2, Y = 1 };
             GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
             gameWalls[gate.X, gate.Y] = true;
 
@@ -131,10 +138,10 @@ namespace ConsoleGameSolution
             destinationPoint.Create();
             GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
-            Player player = new Player { X = 1, Y = Field.YLimit };
+            Player player = new Player { X = 1, Y = Field.YLimit , color=ConsoleColor.Yellow, Symbol=playerSymbol ,LivesCount=3};
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
-            
+
             bool death = false;
             bool gameOver = false;
             #endregion
@@ -156,13 +163,33 @@ namespace ConsoleGameSolution
 
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
-                
+                if (player.LivesCount == 0)
+                {
+                    gameOver = true;
+                    death = true;
+                }
+                for (int i = 0; i < buttons.Count; i++)
+                {
+                    GameObject.UpdateObject(buttons[i]);
+                }
+                GameObject.UpdateObject(player);
+                for (int i = 0; i < ghosts.Count; i++)
+                    ghosts[i].Move();
+
+
+                for (int i = 0; i < ghosts.Count; i++)
+                    if (player.X == ghosts[i].X && player.Y == ghosts[i].Y)
+                    {
+                        player.LivesCount--;
+                        player.UpdateLivesCount();
+                    }
+
                 for (int i = 0; i < buttons.Count; i++)
                     if (player.X == buttons[i].X && player.Y == buttons[i].Y && buttons[i].IsStepped == false)
                     {
                         countOfButtons--;
                         buttons[i].IsStepped = true;
-                        GameObject.WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.Green);
+                        buttons[i].color = ConsoleColor.Green;
                     }
                 if (countOfButtons == 0)
                 {
@@ -194,7 +221,7 @@ namespace ConsoleGameSolution
             Thread.Sleep(1000);
             return score;
         }
-        
+
         public static int Level2(char playerSymbol)
         {
             #region <Default parametrs and creation>
@@ -303,8 +330,8 @@ namespace ConsoleGameSolution
             Thread.Sleep(1000);
             return score;
         }
-        
-        public static int Level3(char playerSymbol) 
+
+        public static int Level3(char playerSymbol)
         {
             #region <Default parametrs and creation>
             int score = 0;
@@ -389,7 +416,7 @@ namespace ConsoleGameSolution
             Thread.Sleep(1000);
             return score;
         }
-        
+
         public static int Level4(char playerSymbol)
         {
             #region <Default parametrs and creation>
@@ -409,7 +436,7 @@ namespace ConsoleGameSolution
             player.UpdateLivesCount();
 
             bool death = false;
-            bool gameOver = false; 
+            bool gameOver = false;
             #endregion
 
             while (!gameOver)
@@ -580,7 +607,7 @@ namespace ConsoleGameSolution
             return true;
         }
         #endregion
-        
+
         public static void Main()
         {
             DrawInterface();
@@ -610,7 +637,7 @@ namespace ConsoleGameSolution
                     Thread.Sleep(1000);
                     return;
             }
-            
+
             playerScore += Level1(playerSymbol);
             if (!CheckAvailabilityToMoveToNextLevel(1)) return;
 

@@ -5,12 +5,16 @@ namespace ConsoleGameSolution
 {
     public class Button : GameObject
     {
-        public List<Button> CreateButtons()
+        
+        
+        
+        public List<Button> CreateButtons(int count)
         {
             var buttons = new List<Button>();
             var random = new Random();
-            var countOfButtons = 4;
-            for (int i = 0; i < countOfButtons; i++)
+            
+
+            for (int i = 0; i < count; i++)
             {
                 var xPos = random.Next(1, Field.XLimit);
                 var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
@@ -20,8 +24,7 @@ namespace ConsoleGameSolution
                     if (button.Y == yPos)
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
 
-                buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false });
-                WriteSymbol(buttons[i].X, buttons[i].Y, 'B', ConsoleColor.DarkCyan);
+                buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false, color = ConsoleColor.Cyan , Symbol='B' });
             }
 
             return buttons;

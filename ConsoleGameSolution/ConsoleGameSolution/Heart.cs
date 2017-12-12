@@ -11,7 +11,7 @@ namespace ConsoleGameSolution
         {
             var hearts = new List<Heart>();
             var random = new Random();
-            var countOfHearts = random.Next(5, Field.YLimit / 2 + 1);
+            var countOfHearts = random.Next(0, 2);
             return hearts;
         }
     }

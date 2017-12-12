@@ -4,7 +4,7 @@ namespace ConsoleGameSolution
 {
     public class MapCreator
     {
-        public static bool[,] CreateMap(string file)
+        public static bool[,] CreateMap(string file) //поясни за класс
         {
             var finalMap = new bool[Field.XLimit + 2, Field.YLimit + 2];
             string[] readedMap = File.ReadAllLines(file);

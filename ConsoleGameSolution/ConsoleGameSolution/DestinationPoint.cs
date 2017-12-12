@@ -4,8 +4,8 @@ namespace ConsoleGameSolution
     public class DestinationPoint : GameObject
     {
         public DestinationPoint Create()
-        {                                                              //var random = new Random();
-            X = Field.XLimit;                                         //random.Next(Field.XLimit) + 1;
+        {                                                              
+            X = Field.XLimit;                                         
             Y = 1;
             return this;
         }
