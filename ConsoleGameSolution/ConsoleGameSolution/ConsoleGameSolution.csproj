@@ -89,6 +89,7 @@
     <Compile Include="Ball.cs" />
     <Compile Include="Beast.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="Coin.cs" />
     <Compile Include="DestinationPoint.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="GameObject.cs" />

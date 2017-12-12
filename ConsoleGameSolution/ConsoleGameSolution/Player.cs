@@ -6,6 +6,8 @@ namespace ConsoleGameSolution
     public class Player : GameObject
     {
         public int LivesCount;
+        public int Score;
+        
         
 
         public void UpdateLivesCount()

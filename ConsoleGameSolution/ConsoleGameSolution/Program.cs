@@ -10,10 +10,12 @@ namespace ConsoleGameSolution
     /// </summary>
     /// <ThingsTODO>
     /// Перенос количества жизней на следующий уровень
+    /// Проверка что на указанной позиции ничего нет
     /// </ThingsTODO>
     class Program
     {
         public static int playerScore;
+        public static bool death;
 
         public static bool[,] DrawWalls()
         {
@@ -109,7 +111,7 @@ namespace ConsoleGameSolution
         }
 
         #region <Levels>
-        public static int Level1(char playerSymbol)
+        public static int Level1(char playerSymbol)// Kiri; мой тест уровень, не удалять
         {
             #region <Default parametrs and creation>
             int score = 0;
@@ -121,15 +123,30 @@ namespace ConsoleGameSolution
             GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 1", ConsoleColor.Cyan);
             var gameWalls = DrawWalls();
             var ghosts = new Ghost().CreateGhosts();
+
             var countOfButtons = 4;
             var buttons = new Button().CreateButtons(countOfButtons);
             for (int i = 0; i < buttons.Count; i++)
             {
                 var button = new GameObject { X = buttons[i].X, Y = buttons[i].Y };
-                GameObject.WriteSymbol(button.X, button.Y, 'B', ConsoleColor.Cyan);
+                GameObject.WriteSymbol(button.X, button.Y, button.Symbol, button.color);
             }
 
-            //d4n0n - это ворота. Они закрывают проход к выходу, пока мы не активируем все кнопочки.
+            var hearts = new Heart().CreateHearts();
+            for (int i = 0; i < hearts.Count; i++)
+            {
+                var heart = new GameObject { X = hearts[i].X, Y = hearts[i].Y };
+                GameObject.WriteSymbol(heart.X, heart.Y, heart.Symbol, heart.color);
+            }
+
+            var countOfCoins = 10;
+            var coins = new Coin().CreateCoins(countOfCoins);
+            for (int i = 0; i < coins.Count; i++)
+            {
+                var coin = new GameObject { X = coins[i].X, Y = coins[i].Y }; //Данэль,эта хрень не нужна аще
+                GameObject.WriteSymbol(coin.X, coin.Y, coin.Symbol, coin.color);
+            }
+
             var gate = new GameObject { X = Field.XLimit - 2, Y = 1 };
             GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
             gameWalls[gate.X, gate.Y] = true;
@@ -142,7 +159,7 @@ namespace ConsoleGameSolution
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
 
-            bool death = false;
+            
             bool gameOver = false;
             #endregion
 
@@ -168,11 +185,23 @@ namespace ConsoleGameSolution
                     gameOver = true;
                     death = true;
                 }
+
                 for (int i = 0; i < buttons.Count; i++)
                 {
                     GameObject.UpdateObject(buttons[i]);
                 }
                 GameObject.UpdateObject(player);
+
+                for (int i = 0; i < hearts.Count; i++)
+                {
+                    GameObject.UpdateObject(hearts[i]);
+                }
+
+                for (int i = 0; i < coins.Count; i++)
+                {
+                    GameObject.UpdateObject(coins[i]);
+                }
+
                 for (int i = 0; i < ghosts.Count; i++)
                     ghosts[i].Move();
 
@@ -181,6 +210,14 @@ namespace ConsoleGameSolution
                     if (player.X == ghosts[i].X && player.Y == ghosts[i].Y)
                     {
                         player.LivesCount--;
+                        player.UpdateLivesCount();
+                    }
+
+                for (int i = 0; i < hearts.Count; i++)
+                    if (player.X == hearts[i].X && player.Y == hearts[i].Y)
+                    {
+                        hearts.Remove(hearts[i]);
+                        player.LivesCount++;
                         player.UpdateLivesCount();
                     }
 
@@ -197,6 +234,14 @@ namespace ConsoleGameSolution
                     gameWalls[gate.X, gate.Y] = false;
                 }
 
+                for (int i = 0; i < coins.Count; i++)
+                    if (player.X == coins[i].X && player.Y == coins[i].Y)
+                    {
+                        coins.Remove(coins[i]);
+                        player.Score+=10;
+                        //player.UpdateScore();
+                    }
+
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -210,11 +255,11 @@ namespace ConsoleGameSolution
             Console.Clear();
 
             if (death)
-                Console.WriteLine("You've lost.");
+                Console.WriteLine("You lose.");
             else
             {
                 Console.WriteLine("Level completed.");
-                score = 1000;
+                //score = 1000;
             }
 
 
@@ -596,9 +641,9 @@ namespace ConsoleGameSolution
             Thread.Sleep(2000);
         }
 
-        public static bool CheckAvailabilityToMoveToNextLevel(int countOfCompletedLevels)
+        public static bool CheckAvailabilityToMoveToNextLevel(bool death)
         {
-            if (playerScore < countOfCompletedLevels * 1000)
+            if (death)
             {
                 DrawInterface();
                 ShowFinalScore();
@@ -639,16 +684,16 @@ namespace ConsoleGameSolution
             }
 
             playerScore += Level1(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(1)) return;
+            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
             playerScore += Level2(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(2)) return;
+            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
             playerScore += Level3(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(3)) return;
+            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
             playerScore += Level4(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(4)) return;
+            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
             playerScore += Level5(playerSymbol);
 
