@@ -9,14 +9,16 @@ namespace ConsoleGameSolution
     /// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707
     /// </summary>
     /// <ThingsTODO>
-    /// Перенос количества жизней на следующий уровень
-    /// Проверка что на указанной позиции ничего нет
+    /// Перенос количества жизней на следующий уровень ------------------Done
+    /// Проверка что на указанной позиции ничего нет -----------------DONE
+    /// Панельку для показа Score нужно :3
     /// </ThingsTODO>
     class Program
     {
         public static int playerScore;
         public static bool death;
         public static List<GameObject> Objects = new List<GameObject>();
+        public static int playerLivesCount;
 
         public static bool[,] DrawWalls()
         {
@@ -112,7 +114,7 @@ namespace ConsoleGameSolution
         }
 
         #region <Levels>
-        public static int Level1(char playerSymbol)// Kiri; мой тест уровень, не удалять
+        public static int[] Level1(char playerSymbol , int livesCount)// Kiri; мой тест уровень, не удалять, другие уровни не подвергнуты изменениям
         {
             #region <Default parametrs and creation>
             int score = 0;
@@ -155,7 +157,7 @@ namespace ConsoleGameSolution
             destinationPoint.Create();
             GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
-            Player player = new Player { X = 1, Y = Field.YLimit , color=ConsoleColor.Yellow, Symbol=playerSymbol ,LivesCount=3};
+            Player player = new Player { X = 1, Y = Field.YLimit , color=ConsoleColor.Yellow, Symbol=playerSymbol ,LivesCount=livesCount};
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
 
@@ -264,7 +266,7 @@ namespace ConsoleGameSolution
 
 
             Thread.Sleep(1000);
-            return score;
+            return new int[] { score, player.LivesCount };
         }
 
         public static int Level2(char playerSymbol)
@@ -683,7 +685,8 @@ namespace ConsoleGameSolution
                     return;
             }
 
-            playerScore += Level1(playerSymbol);
+            playerScore += Level1(playerSymbol,3)[0];     //ну Данэль, ты понял
+            playerLivesCount += Level1(playerSymbol,3)[1];
             if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
             playerScore += Level2(playerSymbol);
