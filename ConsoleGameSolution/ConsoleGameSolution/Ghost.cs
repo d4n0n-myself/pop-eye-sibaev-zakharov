@@ -15,7 +15,7 @@ namespace ConsoleGameSolution
 
             for (int i = 0; i < countOfGhosts; i++)
             {
-                var xPos = random.Next(1, Field.XLimit);
+                var xPos = random.Next(2, Field.XLimit-1);
                 var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
                 var randomDirection = random.Next(2);
 

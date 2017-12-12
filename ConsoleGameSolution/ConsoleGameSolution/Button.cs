@@ -20,11 +20,12 @@ namespace ConsoleGameSolution
                 var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
 
 
-                foreach (var button in buttons)
-                    if (button.Y == yPos)
+                foreach (var obj in Program.Objects)
+                    if (obj.Y == yPos && obj.X == xPos)
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
 
                 buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false, color = ConsoleColor.Cyan , Symbol='B' });
+                Program.Objects.Add(new GameObject { X = xPos, Y = yPos });
             }
 
             return buttons;

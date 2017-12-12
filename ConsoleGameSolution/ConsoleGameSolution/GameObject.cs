@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleGameSolution
 {
@@ -9,6 +10,7 @@ namespace ConsoleGameSolution
         public bool IsStepped { get; set; }
         public ConsoleColor color { get; set; }   //kiri
         public char Symbol { get; set;}   //kiri
+        
 
         public static void WriteSymbol(int x, int y, Char symbol)
         {

@@ -16,6 +16,7 @@ namespace ConsoleGameSolution
     {
         public static int playerScore;
         public static bool death;
+        public static List<GameObject> Objects = new List<GameObject>();
 
         public static bool[,] DrawWalls()
         {
@@ -118,7 +119,6 @@ namespace ConsoleGameSolution
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
-
             var field = new Field();
             GameObject.WriteLevelNumber(0, Field.YLimit + 2, "Level 1", ConsoleColor.Cyan);
             var gameWalls = DrawWalls();
