@@ -15,10 +15,12 @@ namespace ConsoleGameSolution
     /// </ThingsTODO>
     class Program
     {
-        public static int playerScore;
+        
         public static bool death;
         public static List<GameObject> Objects = new List<GameObject>();
-        public static int playerLivesCount;
+        public static Player player;
+        
+        
 
         public static bool[,] DrawWalls()
         {
@@ -114,10 +116,10 @@ namespace ConsoleGameSolution
         }
 
         #region <Levels>
-        public static int[] Level1(char playerSymbol , int livesCount)// Kiri; мой тест уровень, не удалять, другие уровни не подвергнуты изменениям
+        public static Player Level1(char playerSymbol , int livesCount)// Kiri; мой тест уровень, не удалять, другие уровни не подвергнуты изменениям
         {
             #region <Default parametrs and creation>
-            int score = 0;
+            
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
@@ -157,7 +159,7 @@ namespace ConsoleGameSolution
             destinationPoint.Create();
             GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
 
-            Player player = new Player { X = 1, Y = Field.YLimit , color=ConsoleColor.Yellow, Symbol=playerSymbol ,LivesCount=livesCount};
+            Player player = new Player { X = 1, Y = Field.YLimit , color=ConsoleColor.Yellow, Symbol=playerSymbol ,LivesCount=livesCount,Score=0};
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
 
@@ -182,7 +184,7 @@ namespace ConsoleGameSolution
 
                     player.Move(playerSymbol, gameWalls, keyPressed);
                 }
-                if (player.LivesCount == 0)
+                if (player.LivesCount <= 0)
                 {
                     gameOver = true;
                     death = true;
@@ -266,7 +268,7 @@ namespace ConsoleGameSolution
 
 
             Thread.Sleep(1000);
-            return new int[] { score, player.LivesCount };
+            return player;
         }
 
         public static int Level2(char playerSymbol)
@@ -633,22 +635,22 @@ namespace ConsoleGameSolution
                     }
         }
 
-        public static void ShowFinalScore()
+        public static void ShowFinalScore(Player player)
         {
             DrawInterface();
             Console.SetCursorPosition(9, 7);
             Console.Write("Your score:");
             Console.SetCursorPosition(9, 10);
-            Console.WriteLine(playerScore);
+            Console.WriteLine(player.Score);
             Thread.Sleep(2000);
         }
 
-        public static bool CheckAvailabilityToMoveToNextLevel(bool death)
+        public static bool CheckAvailabilityToMoveToNextLevel(bool death,Player player)
         {
             if (death)
             {
                 DrawInterface();
-                ShowFinalScore();
+                ShowFinalScore(player);
                 return false;
             }
             return true;
@@ -685,23 +687,23 @@ namespace ConsoleGameSolution
                     return;
             }
 
-            playerScore += Level1(playerSymbol,3)[0];     //ну Данэль, ты понял
-            playerLivesCount += Level1(playerSymbol,3)[1];
-            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
+            player = Level1(playerSymbol,3);     //ну Данэль, ты понял
+            
+            if (!CheckAvailabilityToMoveToNextLevel(death,player)) return;
 
-            playerScore += Level2(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
+            //playerScore += Level2(playerSymbol);
+            //if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
-            playerScore += Level3(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
+            //playerScore += Level3(playerSymbol);
+            //if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
-            playerScore += Level4(playerSymbol);
-            if (!CheckAvailabilityToMoveToNextLevel(death)) return;
+           // playerScore += Level4(playerSymbol);
+            //if (!CheckAvailabilityToMoveToNextLevel(death)) return;
 
-            playerScore += Level5(playerSymbol);
+            //playerScore += Level5(playerSymbol);
 
             DrawInterface();
-            ShowFinalScore();
+            ShowFinalScore(player);
 
         }
     }
