@@ -9,10 +9,15 @@ namespace ConsoleGameSolution
         public int Score;
         public bool Fallen = false;
 
+        public void UpdateScore()
+        {
+            Console.SetCursorPosition(0, Field.YLimit + 4);
+            Console.Write("Score:{0}", Score);
+        }
 
         public void UpdateLivesCount()
         {
-            Console.SetCursorPosition(8, Field.YLimit + 2);
+            Console.SetCursorPosition(0, Field.YLimit + 3);
             Console.Write("LivesCount:{0}", LivesCount);
         }
 
@@ -20,7 +25,7 @@ namespace ConsoleGameSolution
         {
             WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
             Console.SetCursorPosition(Field.XLimit - 10, Console.WindowHeight - 1);
-            Console.Write("X: {0}  Y: {1}", X, Y);
+            Console.Write("X: {0}  Y: {1,2}", X, Y);
         }
 
         private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)

@@ -24,7 +24,7 @@ namespace ConsoleGameSolution
                     if (obj.Y == yPos && obj.X == xPos)
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
 
-                buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false, color = ConsoleColor.Cyan , Symbol='B' });
+                buttons.Add(new Button { X = xPos, Y = yPos, IsStepped = false, color = ConsoleColor.Red , Symbol='B' });
                 Program.Objects.Add(new GameObject { X = xPos, Y = yPos });
             }
 
