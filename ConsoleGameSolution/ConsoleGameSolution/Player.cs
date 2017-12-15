@@ -7,8 +7,8 @@ namespace ConsoleGameSolution
     {
         public int LivesCount;
         public int Score;
-        
-        
+        public bool Fallen = false;
+
 
         public void UpdateLivesCount()
         {
@@ -25,6 +25,7 @@ namespace ConsoleGameSolution
 
         private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
         {
+
             if (!walls[X, Y + 1])
             {
                 Thread.Sleep(100);
@@ -35,7 +36,10 @@ namespace ConsoleGameSolution
                 WriteSymbol(X, Y, ' ');
                 Y++;
                 WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
+                Fallen = true;
             }
+            else Fallen = false;
+
 
             return Y;
         }
@@ -51,6 +55,8 @@ namespace ConsoleGameSolution
                         X--;
                         WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
                         Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
+                        while (Fallen)
+                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
                     }
                     break;
                 case ConsoleKey.D:
@@ -59,6 +65,8 @@ namespace ConsoleGameSolution
                         X++;
                         WriteSymbol(X, Y, playerSymbol, ConsoleColor.Yellow);
                         Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
+                        while (Fallen)
+                            Y = CheckPointUnderPlayer(playerSymbol, walls, X, Y);
                     }
                     break;
                 case ConsoleKey.W:
