@@ -24,7 +24,7 @@ namespace ConsoleGameSolution
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
 
                 ghosts.Add(new Ghost { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
-                WriteSymbol(ghosts[i].X, ghosts[i].Y, 'X', ConsoleColor.DarkCyan);
+                WriteSymbol(ghosts[i].X, ghosts[i].Y, 'Ö', ConsoleColor.DarkCyan);
             }
 
             return ghosts;
@@ -41,7 +41,7 @@ namespace ConsoleGameSolution
                 X--;
             if (X == 1) DirectedToRightSide = true;
 
-            WriteSymbol(X, Y, 'X', ConsoleColor.Cyan);
+            WriteSymbol(X, Y, 'Ö', ConsoleColor.Cyan);
         }
     }
 }

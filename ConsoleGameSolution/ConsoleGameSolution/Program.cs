@@ -9,9 +9,7 @@ namespace ConsoleGameSolution
     /// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707
     /// </summary>
     /// <ThingsTODO>
-    /// Перенос количества жизней на следующий уровень ------------------Done
-    /// Проверка что на указанной позиции ничего нет -----------------DONE
-    /// Панельку для показа Score нужно :3
+    /// Надо как то закрыть возможность появления прохода к выходу снизу
     /// </ThingsTODO>
     class Program
     {
@@ -45,7 +43,7 @@ namespace ConsoleGameSolution
             for (int i = 0; i < Field.XLimit + 2; i++)
                 for (int j = 0; j < Field.YLimit + 2; j++)
                     if (gameWalls[i, j])
-                        ConsoleGameSolution.GameObject.WriteSymbol(i, j, '#', ConsoleColor.Gray);
+                        ConsoleGameSolution.GameObject.WriteSymbol(i, j, '█', ConsoleColor.DarkRed);
 
             return gameWalls;
         }
@@ -64,7 +62,7 @@ namespace ConsoleGameSolution
 
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, 'E', ConsoleColor.Green);
 
             Player player = new Player { X = 1, Y = Field.YLimit };
             player.ShowCoordinatesStatistics(playerSymbol);
@@ -151,13 +149,13 @@ namespace ConsoleGameSolution
                 GameObject.WriteSymbol(coin.X, coin.Y, coin.Symbol, coin.color);
             }
 
-            var gate = new GameObject { X = Field.XLimit - 2, Y = 1 };
+            var gate = new GameObject { X = Field.XLimit - 1, Y = 1 };
             GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
             gameWalls[gate.X, gate.Y] = true;
 
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
-            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, '%', ConsoleColor.Green);
+            GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, 'E', ConsoleColor.Green);
 
             Player player = new Player { X = 1, Y = Field.YLimit , color=ConsoleColor.Yellow, Symbol=playerSymbol ,LivesCount=livesCount,Score=score};
             player.ShowCoordinatesStatistics(playerSymbol);
@@ -621,17 +619,17 @@ namespace ConsoleGameSolution
         public static void DrawInterface()
         {
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.BufferWidth = Console.WindowWidth = 60;
             Console.BufferHeight = Console.WindowHeight = 20;
             Console.CursorVisible = false;
 
-            for (int x = 0; x < Console.WindowWidth - 1; x++)
+            for (int x = 0; x < Console.WindowWidth-1; x++)
                 for (int y = 0; y < Console.WindowHeight; y++)
-                    if (x < 3 || y < 3 || x > Console.WindowWidth - 5 || y > Console.WindowHeight - 4)
+                    if (x < 4 || y < 3 || x > Console.WindowWidth - 6 || y > Console.WindowHeight - 4)
                     {
                         Console.SetCursorPosition(x, y);
-                        Console.Write('#');
+                        Console.Write('█');
                     }
         }
 
@@ -661,11 +659,12 @@ namespace ConsoleGameSolution
         {
             DrawInterface();
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(9, 6);
             Console.Write("Welcome! Choose your chip.");
             Console.WriteLine();
             Console.SetCursorPosition(9, 8);
-            Console.Write("1 - @, 2 - є, 3 - &");
+            Console.Write("1 - @, 2 - є, 3 - &, 4 - %");
             Char playerSymbol = ' ';
             Console.SetCursorPosition(9, 10);
 
@@ -679,6 +678,9 @@ namespace ConsoleGameSolution
                     break;
                 case "3":
                     playerSymbol = '&';
+                    break;
+                case "4":
+                    playerSymbol = '%';
                     break;
                 default:
                     Console.SetCursorPosition(9, 10);

@@ -11,12 +11,14 @@ namespace ConsoleGameSolution
 
         public void UpdateScore()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(0, Field.YLimit + 4);
             Console.Write("Score:{0}", Score);
         }
 
         public void UpdateLivesCount()
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.SetCursorPosition(0, Field.YLimit + 3);
             Console.Write("LivesCount:{0}", LivesCount);
         }

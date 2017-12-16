@@ -31,7 +31,7 @@ namespace ConsoleGameSolution
                     ball.CanTakePoint(yPos, walls);
 
                 balls.Add(new Ball { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
-                WriteSymbol(balls[i].X, balls[i].Y, 'o', ConsoleColor.Blue);
+                WriteSymbol(balls[i].X, balls[i].Y, 'Θ', ConsoleColor.Blue);
             }
 
             return balls;

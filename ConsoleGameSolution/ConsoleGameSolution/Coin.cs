@@ -21,7 +21,7 @@ namespace ConsoleGameSolution
                     if (obj.Y == yPos&& obj.X == xPos)
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
 
-                coins.Add(new Coin { X = xPos, Y = yPos, IsStepped = false, color = ConsoleColor.DarkYellow, Symbol = '$' });
+                coins.Add(new Coin { X = xPos, Y = yPos, IsStepped = false, color = ConsoleColor.DarkGreen, Symbol = '$' });
                 Program.Objects.Add(new GameObject { X = xPos, Y = yPos });
             }
 
