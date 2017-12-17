@@ -5,9 +5,6 @@ namespace ConsoleGameSolution
 {
     public class Button : GameObject
     {
-        
-        
-        
         public List<Button> CreateButtons(int count)
         {
             var buttons = new List<Button>();

@@ -6,20 +6,12 @@ namespace ConsoleGameSolution
     public class Player : GameObject
     {
         public int LivesCount;
-        public int Score;
         public bool Fallen = false;
-
-        public void UpdateScore()
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(0, Field.YLimit + 4);
-            Console.Write("Score:{0}", Score);
-        }
 
         public void UpdateLivesCount()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.SetCursorPosition(0, Field.YLimit + 3);
+            Console.SetCursorPosition(0, Field.YLimit + 4);
             Console.Write("LivesCount:{0}", LivesCount);
         }
 
@@ -32,7 +24,6 @@ namespace ConsoleGameSolution
 
         private int CheckPointUnderPlayer(char playerSymbol, bool[,] walls, int X, int Y)
         {
-
             if (!walls[X, Y + 1])
             {
                 Thread.Sleep(100);
@@ -46,7 +37,6 @@ namespace ConsoleGameSolution
                 Fallen = true;
             }
             else Fallen = false;
-
 
             return Y;
         }

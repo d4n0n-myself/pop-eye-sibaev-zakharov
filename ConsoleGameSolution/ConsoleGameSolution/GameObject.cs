@@ -11,6 +11,11 @@ namespace ConsoleGameSolution
         public ConsoleColor color { get; set; }   //kiri
         public char Symbol { get; set;}   //kiri
         
+        public static void Write(int x, int y, string text)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(text);
+        }
 
         public static void WriteSymbol(int x, int y, Char symbol)
         {

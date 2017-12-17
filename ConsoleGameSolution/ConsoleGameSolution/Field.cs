@@ -8,7 +8,7 @@ namespace ConsoleGameSolution
         public static int YLimit;
 
         public Field()
-            : this(Console.WindowWidth -1 , Console.WindowHeight - 3)
+            : this(Console.WindowWidth - 1 , Console.WindowHeight - 3)
         { }
 
         public Field(int xLimit, int yLimit)

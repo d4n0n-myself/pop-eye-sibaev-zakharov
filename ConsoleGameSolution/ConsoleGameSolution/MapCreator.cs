@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System;
 
 namespace ConsoleGameSolution
 {
@@ -6,13 +7,16 @@ namespace ConsoleGameSolution
     {
         public static bool[,] CreateMap(string file) //поясни за класс
         {
-            var finalMap = new bool[Field.XLimit + 2, Field.YLimit + 2];
             string[] readedMap = File.ReadAllLines(file);
+            var finalMap = new bool[Console.BufferWidth, Console.BufferHeight - 2];
 
-            for (int i = 0; i < Field.XLimit + 2; i++)
-                for (int j = 0; j < Field.YLimit + 2; j++)
+            for (int i = 0; i < readedMap.Length; i++)
+                for (int j = 0; j < readedMap[0].Length; j++)
                     if (readedMap[i][j] == '#')
-                        finalMap[i, j] = true;
+                    {
+                        finalMap[j, i] = true;
+                        Program.Objects.Add(new GameObject { X = j, Y = i });
+                    }
 
             return finalMap;
         }
