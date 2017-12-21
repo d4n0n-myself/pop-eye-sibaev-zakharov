@@ -166,7 +166,10 @@ namespace ConsoleGameSolution
                 beast.BeastMove(player);
                 GameObject.UpdateObject(beast);
                 if (player.X == beast.X && player.Y == beast.Y)
+                {
                     player.LivesCount--;
+                    player.UpdateLivesCount();
+                }
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
                     gameOver = true;
@@ -248,10 +251,10 @@ namespace ConsoleGameSolution
             Char playerSymbol = ' ';
 
             GameObject.Write(3, 3, "Rules:");
-            GameObject.Write(3, 4, "Reach the exit gate, by pressing on buttons ■.");
-            GameObject.Write(3, 3, "Collect $ on the way, it will increase your score.");
-            GameObject.Write(3, 5, "Avoid ghosts Ö and other mobs.");
-            GameObject.Write(3, 6, "\"H\" entity will increase your life count.");
+            GameObject.Write(3, 4, "Reach the exit, unlock it by stepping on \"■\".");
+            GameObject.Write(3, 5, "Collect \"$\" on the way, it will increase your score.");
+            GameObject.Write(3, 6, "Avoid ghosts \"Y\" and other mobs \"X\",\"o\".");
+            GameObject.Write(3, 7, "\"H\" heart will increase your life count.");
             GameObject.Write(3, Console.BufferHeight - 5, "Choose your chip from following:");
             GameObject.Write(3, Console.BufferHeight - 4, "1 - @, 2 - є, 3 - &, 4 - %");
             Console.SetCursorPosition(3, Console.BufferHeight - 3);
