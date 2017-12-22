@@ -61,31 +61,19 @@ namespace ConsoleGameSolution
 
             var countOfButtons = objects["B"];
             var buttons = new Button().CreateButtons(countOfButtons);
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                var button = new GameObject { X = buttons[i].X, Y = buttons[i].Y };
-                GameObject.WriteSymbol(button.X, button.Y, button.Symbol, button.color);
-            }
 
 
+            var rollingStones = new RollingStone().Create(map, objects["R"]);
 
             var ghosts = new Ghost().CreateGhosts(objects["G"]);
 
 
             var hearts = new Heart().CreateHearts(objects["H"]);
-            for (int i = 0; i < hearts.Count; i++)
-            {
-                var heart = new GameObject { X = hearts[i].X, Y = hearts[i].Y };
-                GameObject.WriteSymbol(heart.X, heart.Y, heart.Symbol, heart.color);
-            }
+            
 
 
             var coins = new Coin().CreateCoins(objects["C"]);
-            for (int i = 0; i < coins.Count; i++)
-            {
-                var coin = new GameObject { X = coins[i].X, Y = coins[i].Y };
-                GameObject.WriteSymbol(coin.X, coin.Y, coin.Symbol, coin.color);
-            }
+            
 
             var demons = new Demon().CreateDemons(objects["D"]);
 
@@ -137,6 +125,8 @@ namespace ConsoleGameSolution
 
                 for (int i = 0; i < ghosts.Count; i++)
                     ghosts[i].Move();
+                for (int i = 0; i < rollingStones.Count; i++)
+                    rollingStones[i].Move(map);
 
                 GameObject.UpdateObject(player);
 

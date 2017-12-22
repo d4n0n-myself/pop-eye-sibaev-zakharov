@@ -15,13 +15,13 @@ namespace ConsoleGameSolution
                 yPos = random.Next(Field.YLimit / 4) + Field.YLimit / 4;
         }
 
-        public List<RollingStone> Create(bool[,] walls)
+        public List<RollingStone> Create(bool[,] walls,int count)
         {
             var balls = new List<RollingStone>();
             var random = new Random();
-            var countOfBalls = random.Next(4, 6);
+            
 
-            for (int i = 0; i <= countOfBalls; i++)
+            for (int i = 0; i < count; i++)
             {
                 var xPos = random.Next(Field.XLimit) + 1;
                 var yPos = random.Next(Field.YLimit / 4) * 2 + 1;

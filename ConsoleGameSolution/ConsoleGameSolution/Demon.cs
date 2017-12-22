@@ -24,7 +24,10 @@ namespace ConsoleGameSolution
 
                 foreach (var demon in demons)
                     if (demon.Y == yPos)
+                    {
+                        xPos = random.Next(1, Field.XLimit);
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
+                    }
 
                 demons.Add(new Demon { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
                 WriteSymbol(demons[i].X, demons[i].Y, 'X', ConsoleColor.Red);
