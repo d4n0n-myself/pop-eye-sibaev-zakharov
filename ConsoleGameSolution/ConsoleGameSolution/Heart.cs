@@ -8,11 +8,11 @@ namespace ConsoleGameSolution
     {
         //Kirill:добавочные жизни игроку
         //лежат на карте, игрок подбирает и LivesCount++;
-        public List<Heart> CreateHearts()
+        public List<Heart> CreateHearts(int count)
         {
             var hearts = new List<Heart>();
             var random = new Random();
-            var count = random.Next(1, 2);
+            
             for (int i = 0; i < count; i++)
             {
                 var xPos = random.Next(1, Field.XLimit);

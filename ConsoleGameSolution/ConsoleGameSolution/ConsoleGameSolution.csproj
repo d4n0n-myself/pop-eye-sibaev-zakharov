@@ -86,8 +86,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ball.cs" />
-    <Compile Include="Beast.cs" />
+    <Compile Include="RollingStone.cs" />
+    <Compile Include="Demon.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Coin.cs" />
     <Compile Include="DestinationPoint.cs" />

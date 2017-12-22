@@ -15,11 +15,19 @@ namespace ConsoleGameSolution
     /// d4n0n - Beast overpowered?
     /// </ThingsTODO>
     /// Old levels - https://bitbucket.org/snippets/d4n0n_myself/Be9dk8
-    
+
     class Program
     {
         public static bool stopGame = false;
         public static List<GameObject> Objects = new List<GameObject>();
+        public static int score = 0;
+
+        public static void UpdateScore(int score)
+        {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(0, Field.YLimit + 2);
+                Console.Write("Score:{0}", score);
+        }
 
         public static void DrawWalls(bool[,] walls)
         {
@@ -33,7 +41,6 @@ namespace ConsoleGameSolution
         //to make it generalized
         public static int Level(int lvlNumber, char playerSymbol)
         {
-            int score = 0;
             PrepareConsole();
             const int frameDelay = 100;
             var stopwatch = new Stopwatch();
@@ -43,13 +50,16 @@ namespace ConsoleGameSolution
             bool[,] map = MapCreator.CreateMap(fileName);
             DrawWalls(map);
             GameObject.WriteLevelNumber(0, Field.YLimit + 3, "Level " + lvlNumber, ConsoleColor.Cyan);
+            UpdateScore(score);
 
             #region<lvlEntities>
+            var objects = MapCreator.GameObjects(fileName);
+
             var destinationPoint = new DestinationPoint();
             destinationPoint.Create();
             GameObject.WriteSymbol(destinationPoint.X, destinationPoint.Y, 'E', ConsoleColor.Green);
 
-            var countOfButtons = 4;
+            var countOfButtons = objects["B"];
             var buttons = new Button().CreateButtons(countOfButtons);
             for (int i = 0; i < buttons.Count; i++)
             {
@@ -57,25 +67,28 @@ namespace ConsoleGameSolution
                 GameObject.WriteSymbol(button.X, button.Y, button.Symbol, button.color);
             }
 
-            var ghosts = new Ghost().CreateGhosts();
 
-            var hearts = new Heart().CreateHearts();
+
+            var ghosts = new Ghost().CreateGhosts(objects["G"]);
+
+
+            var hearts = new Heart().CreateHearts(objects["H"]);
             for (int i = 0; i < hearts.Count; i++)
             {
                 var heart = new GameObject { X = hearts[i].X, Y = hearts[i].Y };
                 GameObject.WriteSymbol(heart.X, heart.Y, heart.Symbol, heart.color);
             }
 
-            var countOfCoins = 10;
-            var coins = new Coin().CreateCoins(countOfCoins);
+
+            var coins = new Coin().CreateCoins(objects["C"]);
             for (int i = 0; i < coins.Count; i++)
             {
                 var coin = new GameObject { X = coins[i].X, Y = coins[i].Y };
                 GameObject.WriteSymbol(coin.X, coin.Y, coin.Symbol, coin.color);
             }
 
-            var beast = new Beast().CreateBeast();
-            GameObject.UpdateObject(beast);
+            var demons = new Demon().CreateDemons(objects["D"]);
+
 
             var gate = new GameObject { X = Field.XLimit - 1, Y = 1 };
             GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
@@ -161,14 +174,18 @@ namespace ConsoleGameSolution
                     {
                         coins.Remove(coins[i]);
                         score += 10;
+                        UpdateScore(score);
                     }
-
-                beast.BeastMove(player);
-                GameObject.UpdateObject(beast);
-                if (player.X == beast.X && player.Y == beast.Y)
+                for (int i = 0; i < demons.Count; i++)
                 {
-                    player.LivesCount--;
-                    player.UpdateLivesCount();
+                    demons[i].Move(player);                }
+                for (int i = 0; i < demons.Count; i++)
+                {
+                    if (player.X == demons[i].X && player.Y == demons[i].Y)
+                    {
+                        player.LivesCount--;
+                        player.UpdateLivesCount();
+                    }
                 }
 
                 if (player.X == destinationPoint.X && player.Y == destinationPoint.Y)
@@ -231,7 +248,7 @@ namespace ConsoleGameSolution
             Console.SetCursorPosition(9, 10);
             Console.WriteLine(score);
             Thread.Sleep(2000);
-        }        
+        }
 
         public static bool CheckAvailabilityToMoveToNextLevel(bool stopGame, int score)
         {

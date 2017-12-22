@@ -12,7 +12,7 @@ namespace ConsoleGameSolution
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.SetCursorPosition(0, Field.YLimit + 4);
-            Console.Write("LivesCount:{0}", LivesCount);
+            Console.Write("LivesCount:{0,2}", LivesCount);
         }
 
         public void ShowCoordinatesStatistics(char playerSymbol)

@@ -7,11 +7,10 @@ namespace ConsoleGameSolution
     {
         public bool DirectedToRightSide;
 
-        public List<Ghost> CreateGhosts()
+        public List<Ghost> CreateGhosts(int countOfGhosts)
         {
             var ghosts = new List<Ghost>();
             var random = new Random();
-            var countOfGhosts = random.Next(5, Field.YLimit / 2 + 1);
 
             for (int i = 0; i < countOfGhosts; i++)
             {

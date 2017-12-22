@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ConsoleGameSolution
 {
-    public class Ball : GameObject
+    public class RollingStone : GameObject
     {
         public bool DirectedToRightSide;
 
@@ -15,13 +15,13 @@ namespace ConsoleGameSolution
                 yPos = random.Next(Field.YLimit / 4) + Field.YLimit / 4;
         }
 
-        public List<Ball> Create(bool[,] walls)
+        public List<RollingStone> Create(bool[,] walls)
         {
-            var balls = new List<Ball>();
+            var balls = new List<RollingStone>();
             var random = new Random();
             var countOfBalls = random.Next(4, 6);
 
-            for (int i = 0; i < countOfBalls; i++)
+            for (int i = 0; i <= countOfBalls; i++)
             {
                 var xPos = random.Next(Field.XLimit) + 1;
                 var yPos = random.Next(Field.YLimit / 4) * 2 + 1;
@@ -30,7 +30,7 @@ namespace ConsoleGameSolution
                 foreach (var ball in balls)
                     ball.CanTakePoint(yPos, walls);
 
-                balls.Add(new Ball { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
+                balls.Add(new RollingStone { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
                 WriteSymbol(balls[i].X, balls[i].Y, 'Θ', ConsoleColor.Blue);
             }
 
