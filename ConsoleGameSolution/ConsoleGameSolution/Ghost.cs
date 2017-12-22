@@ -41,7 +41,7 @@ namespace ConsoleGameSolution
                 X--;
             if (X == 1) DirectedToRightSide = true;
 
-            WriteSymbol(X, Y, 'Ö', ConsoleColor.Cyan);
+            WriteSymbol(X, Y, 'Y', ConsoleColor.Cyan);
         }
     }
 }

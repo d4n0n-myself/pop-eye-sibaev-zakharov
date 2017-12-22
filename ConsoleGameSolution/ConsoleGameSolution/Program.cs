@@ -226,6 +226,7 @@ namespace ConsoleGameSolution
         {
             DrawInterface();
             Console.SetCursorPosition(9, 7);
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Your score:");
             Console.SetCursorPosition(9, 10);
             Console.WriteLine(score);

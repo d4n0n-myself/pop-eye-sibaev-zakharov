@@ -6,9 +6,10 @@ namespace ConsoleGameSolution
 {
     public class Coin : GameObject
     {
+        // Kiri: это очки для HighScore
+
         public List<Coin> CreateCoins(int count)
         {
-            // Kiri: это очки для HighScore
             var coins = new List<Coin>();
             var random = new Random();
             for (int i = 0; i < count; i++)

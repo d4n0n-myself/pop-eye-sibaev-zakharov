@@ -6,7 +6,7 @@ namespace ConsoleGameSolution
 {
     public class Heart : GameObject
     {
-        //KIRI:добавочные жизни игроку
+        //Kirill:добавочные жизни игроку
         //лежат на карте, игрок подбирает и LivesCount++;
         public List<Heart> CreateHearts()
         {

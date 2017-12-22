@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\ConsoleGameSolution",
-    "\\ConsoleGameSolution\\ConsoleGameSolution"
+    "\\ConsoleGameSolution\\ConsoleGameSolution",
+    "\\ConsoleGameSolution\\ConsoleGameSolution\\Levels"
   ],
-  "SelectedNode": "\\ConsoleGameSolution\\ConsoleGameSolution\\ConsoleGameSolution.sln",
+  "SelectedNode": "\\ConsoleGameSolution\\ConsoleGameSolution\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

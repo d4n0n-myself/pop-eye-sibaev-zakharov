@@ -5,6 +5,9 @@ namespace ConsoleGameSolution
 {
     public class Button : GameObject
     {
+        // Kirill's creation
+        // Нужно наступить на все кнопки чтобы открылся gate и выпустил с уровня
+
         public List<Button> CreateButtons(int count)
         {
             var buttons = new List<Button>();
