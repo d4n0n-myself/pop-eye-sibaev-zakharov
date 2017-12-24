@@ -47,7 +47,7 @@ namespace ConsoleGameSolution
                     count += readedMap[lastline][j];
 
             }
-            objects[readedMap[lastline][readedMap[lastline].Length - 1].ToString()] = Convert.ToInt32(count);
+            objects[tempLetter.ToString()] = Convert.ToInt32(count);
             return objects;
         }
     }
