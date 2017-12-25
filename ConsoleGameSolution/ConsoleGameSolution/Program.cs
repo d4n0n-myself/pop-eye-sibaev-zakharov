@@ -18,27 +18,10 @@ namespace ConsoleGameSolution
 
     class Program
     {
-        public static bool stopGame = false;
+        private static bool stopGame = false;
         public static List<GameObject> Objects = new List<GameObject>();
-        public static int score = 0;
-
-        public static void UpdateScore(int score)
-        {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(0, Field.YLimit + 2);
-                Console.Write("Score:{0}", score);
-        }
-
-        public static void DrawWalls(bool[,] walls)
-        {
-            for (int i = 0; i < walls.GetLength(1); i++)
-                for (int j = 0; j < walls.GetLength(0); j++)
-                    if (walls[j, i])
-                        GameObject.WriteSymbol(j, i, '█', ConsoleColor.DarkRed);
-        }
-
-        //d4n0n - preset for level
-        //to make it generalized
+        private static int score = 0;
+        
         public static int Level(int lvlNumber, char playerSymbol)
         {
             PrepareConsole();
@@ -153,6 +136,13 @@ namespace ConsoleGameSolution
                         buttons[i].color = ConsoleColor.Green;
                     }
 
+                for (int i=0; i< rollingStones.Count; i++)
+                    if (player.X == rollingStones[i].X && player.Y == rollingStones[i].Y)
+                    {
+                        player.LivesCount--;
+                        player.UpdateLivesCount();
+                    }
+
                 if (countOfButtons == 0)
                 {
                     GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Green);
@@ -204,6 +194,21 @@ namespace ConsoleGameSolution
         }
 
         #region <Systematic>
+        public static void UpdateScore(int score)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(0, Field.YLimit + 2);
+            Console.Write("Score:{0}", score);
+        }
+
+        public static void DrawWalls(bool[,] walls)
+        {
+            for (int i = 0; i < walls.GetLength(1); i++)
+                for (int j = 0; j < walls.GetLength(0); j++)
+                    if (walls[j, i])
+                        GameObject.WriteSymbol(j, i, '█', ConsoleColor.DarkRed);
+        }
+
         public static void PrepareConsole()
         {
             Console.Clear();

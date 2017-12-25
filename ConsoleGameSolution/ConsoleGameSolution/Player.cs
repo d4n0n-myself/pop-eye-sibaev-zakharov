@@ -6,7 +6,7 @@ namespace ConsoleGameSolution
     public class Player : GameObject
     {
         public int LivesCount;
-        public bool Fallen = false;
+        private bool Fallen = false;
 
         public void UpdateLivesCount()
         {

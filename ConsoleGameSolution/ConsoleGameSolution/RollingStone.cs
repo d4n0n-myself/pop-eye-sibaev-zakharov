@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace ConsoleGameSolution
 {
     public class RollingStone : GameObject
     {
-        public bool DirectedToRightSide;
-
-        public void CanTakePoint(int yPos, bool[,] walls)
-        {
-            var random = new Random();
-
-            while (Y == yPos || walls[X, Y])
-                yPos = random.Next(Field.YLimit / 4) + Field.YLimit / 4;
-        }
+        private bool DirectedToRightSide;
 
         public List<RollingStone> Create(bool[,] walls,int count)
         {
@@ -27,8 +20,12 @@ namespace ConsoleGameSolution
                 var yPos = random.Next(Field.YLimit / 4) * 2 + 1;
                 var randomDirection = random.Next(2);
 
-                foreach (var ball in balls)
-                    ball.CanTakePoint(yPos, walls);
+                foreach (var obj in Program.Objects)
+                    if (obj.Y == yPos && obj.X == xPos)
+                    {
+                        xPos = random.Next(1, Field.XLimit);
+                        yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
+                    }
 
                 balls.Add(new RollingStone { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
                 WriteSymbol(balls[i].X, balls[i].Y, 'Θ', ConsoleColor.Blue);
@@ -47,21 +44,22 @@ namespace ConsoleGameSolution
                 WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
                 return;
             }
-            if (X + 1 < Field.XLimit + 1 && DirectedToRightSide)
+            if (X + 1 < Field.XLimit && DirectedToRightSide)
             {
                 X++;
                 WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
                 return;
             }
-            if (X - 1 > 0 && !DirectedToRightSide)
+            if (X - 1 > 1 && !DirectedToRightSide)
             {
                 X--;
                 WriteSymbol(X, Y, 'o', ConsoleColor.Blue);
                 return;
             }
-            if (X == 1 && Y == Field.YLimit) Y = 1;
-            if (X == 1) DirectedToRightSide = true;
-            if (X == Field.XLimit) DirectedToRightSide = false;
+            if (Y == Field.YLimit - 1) Y = 1;
+            if (X == 2) DirectedToRightSide = true;
+            if (X == Field.XLimit - 1) DirectedToRightSide = false;
+            Thread.Sleep(50);
         }
     }
 }

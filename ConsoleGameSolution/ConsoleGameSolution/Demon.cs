@@ -5,7 +5,8 @@ namespace ConsoleGameSolution
 {
     public class Demon : GameObject
     {
-        public bool DirectedToRightSide = false;
+        private bool DirectedToRightSide = false;
+
         public List<Demon> CreateDemons(int count)
         {
             //d4n0n: придумал реализацию - если demon находится в расстоянии < (сколько-нибудь) до игрока
@@ -22,14 +23,15 @@ namespace ConsoleGameSolution
                 var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
                 var randomDirection = random.Next(2);
 
-                foreach (var demon in demons)
-                    if (demon.Y == yPos)
+                foreach (var obj in Program.Objects)
+                    if (obj.Y == yPos && obj.X == xPos)
                     {
                         xPos = random.Next(1, Field.XLimit);
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
                     }
 
                 demons.Add(new Demon { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
+                Program.Objects.Add(new GameObject { X = xPos, Y = yPos });
                 WriteSymbol(demons[i].X, demons[i].Y, 'X', ConsoleColor.Red);
                 
             }

@@ -5,7 +5,7 @@ namespace ConsoleGameSolution
 {
     public class Ghost : GameObject
     {
-        public bool DirectedToRightSide;
+        private bool DirectedToRightSide;
 
         public List<Ghost> CreateGhosts(int countOfGhosts)
         {
@@ -17,15 +17,16 @@ namespace ConsoleGameSolution
                 var xPos = random.Next(2, Field.XLimit-1);
                 var yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
                 var randomDirection = random.Next(2);
-
-                foreach (var ghost in ghosts)
-                    if (ghost.Y == yPos)
+                
+                foreach (var obj in Program.Objects)
+                    if (obj.Y == yPos && obj.X == xPos)
                     {
-                        xPos = random.Next(2, Field.XLimit - 1);
+                        xPos = random.Next(1, Field.XLimit);
                         yPos = random.Next(1, Field.YLimit / 2) * 2 + 1;
                     }
 
                 ghosts.Add(new Ghost { X = xPos, Y = yPos, DirectedToRightSide = randomDirection == 1 ? true : false });
+                Program.Objects.Add(new GameObject { X = xPos, Y = yPos });
                 WriteSymbol(ghosts[i].X, ghosts[i].Y, 'Y', ConsoleColor.DarkCyan);
             }
 

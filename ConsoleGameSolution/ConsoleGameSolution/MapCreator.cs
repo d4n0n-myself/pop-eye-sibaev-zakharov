@@ -23,6 +23,7 @@ namespace ConsoleGameSolution
 
 
         }
+
         public static Dictionary<string, int> GameObjects(string file) //Kirill: возможность конфигурации количества объектов на уровне в файле уровня.
         {
             var objects = new Dictionary<string, int>();
