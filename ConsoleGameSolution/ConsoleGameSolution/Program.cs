@@ -9,18 +9,13 @@ namespace ConsoleGameSolution
     /// <summary>
     /// Made by Danel Sibaev 11-706 and Zakharov Kirill 11-707
     /// </summary>
-    /// <ThingsTODO>
-    /// Надо как то закрыть возможность появления прохода к выходу снизу
-    /// Нарисовать уровни
-    /// d4n0n - Beast overpowered?
-    /// </ThingsTODO>
-    /// Old levels - https://bitbucket.org/snippets/d4n0n_myself/Be9dk8
 
     class Program
     {
         private static bool stopGame = false;
         public static List<GameObject> Objects = new List<GameObject>();
         private static int score = 0;
+        private static int livesCount = 3;
         
         public static int Level(int lvlNumber, char playerSymbol)
         {
@@ -44,29 +39,23 @@ namespace ConsoleGameSolution
 
             var countOfButtons = objects["B"];
             var buttons = new Button().CreateButtons(countOfButtons);
-
-
+            
             var rollingStones = new RollingStone().Create(map, objects["R"]);
 
             var ghosts = new Ghost().CreateGhosts(objects["G"]);
-
-
+            
             var hearts = new Heart().CreateHearts(objects["H"]);
             
-
-
             var coins = new Coin().CreateCoins(objects["C"]);
             
-
             var demons = new Demon().CreateDemons(objects["D"]);
-
-
+            
             var gate = new GameObject { X = Field.XLimit - 1, Y = 1 };
             GameObject.WriteSymbol(gate.X, gate.Y, '[', ConsoleColor.Red);
             map[gate.X, gate.Y] = true;
             #endregion
 
-            Player player = new Player { X = 1, Y = Field.YLimit - 1, LivesCount = 3, Symbol = playerSymbol, color = ConsoleColor.Yellow };
+            Player player = new Player { X = 1, Y = Field.YLimit - 1, LivesCount = livesCount, Symbol = playerSymbol, color = ConsoleColor.Yellow };
             player.ShowCoordinatesStatistics(playerSymbol);
             player.UpdateLivesCount();
 
@@ -176,7 +165,6 @@ namespace ConsoleGameSolution
                 stopwatch.Reset();
                 Thread.Sleep(sleepTime);
             }
-
             Console.Clear();
 
             if (death)
@@ -294,6 +282,7 @@ namespace ConsoleGameSolution
             }
 
             int gameScore = 0;
+
             for (int i = 1; i < 6; i++)
             {
                 gameScore += Level(i, playerSymbol);
